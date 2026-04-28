@@ -849,19 +849,125 @@
     .support-card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
     .support-card-desc { font-size: 13px; color: var(--txt2); line-height: 1.65; margin-bottom: 16px; }
 
-    .support-card-link {
+    .support-card-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-size: 13px;
       font-weight: 700;
       color: var(--p2);
-      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'DM Sans', sans-serif;
       transition: color .2s;
     }
-    .support-card-link:hover { color: var(--txt); }
-    .support-card-link .arr { transition: transform .2s; }
-    .support-card-link:hover .arr { transform: translateX(3px); }
+    .support-card-btn:hover { color: var(--txt); }
+    .support-card-btn .arr { transition: transform .3s; display: inline-block; }
+    .support-card-btn.open .arr { transform: rotate(90deg); }
+
+    /* ── Contact form dropdown ─────────────────────────────────────────────── */
+    .contact-form-wrap {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+    }
+    .contact-form-wrap.open { max-height: 600px; }
+
+    .contact-form {
+      border-top: 1px solid rgba(124,58,237,0.15);
+      margin-top: 16px;
+      padding-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cf-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--txt3);
+      margin-bottom: 5px;
+    }
+
+    .cf-input, .cf-textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1.5px solid var(--bg4);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 13px;
+      color: var(--txt);
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .cf-input:focus, .cf-textarea:focus { border-color: var(--p2); }
+    .cf-input::placeholder, .cf-textarea::placeholder { color: var(--txt3); }
+
+    .cf-textarea { resize: vertical; min-height: 90px; max-height: 200px; line-height: 1.5; }
+
+    .cf-attach-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cf-attach-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1.5px dashed var(--bg4);
+      background: var(--bg3);
+      color: var(--txt3);
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+      white-space: nowrap;
+    }
+    .cf-attach-btn:hover { border-color: var(--p2); color: var(--txt2); }
+    .cf-attach-name {
+      font-size: 12px;
+      color: var(--txt3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+
+    .cf-send-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: var(--p);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background .2s, transform .15s, opacity .2s;
+    }
+    .cf-send-btn:hover { background: var(--p2); }
+    .cf-send-btn:active { transform: scale(0.98); }
+    .cf-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .cf-status {
+      font-size: 12px;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: none;
+      line-height: 1.5;
+    }
+    .cf-status.error   { background: rgba(239,68,68,0.1);  color: var(--red); border:1px solid rgba(239,68,68,0.2); display:block; }
+    .cf-status.success { background: rgba(16,185,129,0.1); color: var(--grn); border:1px solid rgba(16,185,129,0.2); display:block; }
 
     /* ── Delete Account Panel ──────────────────────────────────────────────── */
     .delete-panel {
@@ -1545,23 +1651,92 @@
 
       <!-- Contact cards -->
       <div class="support-grid">
+
+        <!-- Email Support -->
         <div class="support-card reveal">
           <span class="support-card-icon">📧</span>
           <div class="support-card-title">Email Support</div>
           <div class="support-card-desc">For account issues, billing questions, or anything else — drop us a message. We reply within 24 hours, Monday to Saturday.</div>
-          <a href="mailto:info@onetraxx.com" class="support-card-link" onclick="handleMailto(event,'info@onetraxx.com','','')">info@onetraxx.com <span class="arr">→</span></a>
+          <button class="support-card-btn" onclick="toggleForm('form-general', this)">
+            Contact us <span class="arr">›</span>
+          </button>
+          <div class="contact-form-wrap" id="form-general">
+            <div class="contact-form">
+              <div>
+                <div class="cf-label">Your email</div>
+                <input class="cf-input" type="email" placeholder="you@example.com" id="gEmail"/>
+              </div>
+              <div>
+                <div class="cf-label">Message</div>
+                <textarea class="cf-textarea" placeholder="How can we help you?" id="gMsg"></textarea>
+              </div>
+              <div class="cf-attach-row">
+                <input type="file" id="gFile" style="display:none" onchange="showFileName('gFile','gFileName')"/>
+                <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()">📎 Attach file</button>
+                <span class="cf-attach-name" id="gFileName"></span>
+              </div>
+              <div class="cf-status" id="gStatus"></div>
+              <button class="cf-send-btn" onclick="submitForm('general')">Send Message</button>
+            </div>
+          </div>
         </div>
+
+        <!-- Report a Bug -->
         <div class="support-card reveal">
           <span class="support-card-icon">🐛</span>
           <div class="support-card-title">Report a Bug</div>
           <div class="support-card-desc">Found something broken? Tell us what happened, what device you're on, and the steps to reproduce it. Every report makes the app better.</div>
-          <a href="mailto:info@onetraxx.com?subject=Bug%20Report&body=Device%3A%0AOS%20version%3A%0ASteps%20to%20reproduce%3A%0A%0AWhat%20happened%3A" class="support-card-link" onclick="handleMailto(event,'info@onetraxx.com','Bug Report','Device:\nOS version:\nSteps to reproduce:\n\nWhat happened:\n')">Send bug report <span class="arr">→</span></a>
+          <button class="support-card-btn" onclick="toggleForm('form-bug', this)">
+            Send bug report <span class="arr">›</span>
+          </button>
+          <div class="contact-form-wrap" id="form-bug">
+            <div class="contact-form">
+              <div>
+                <div class="cf-label">Your email</div>
+                <input class="cf-input" type="email" placeholder="you@example.com" id="bEmail"/>
+              </div>
+              <div>
+                <div class="cf-label">Describe the bug</div>
+                <textarea class="cf-textarea" placeholder="Device, OS version, steps to reproduce, what happened…" id="bMsg"></textarea>
+              </div>
+              <div class="cf-attach-row">
+                <input type="file" id="bFile" style="display:none" accept="image/*,video/*" onchange="showFileName('bFile','bFileName')"/>
+                <button class="cf-attach-btn" onclick="document.getElementById('bFile').click()">📎 Attach screenshot</button>
+                <span class="cf-attach-name" id="bFileName"></span>
+              </div>
+              <div class="cf-status" id="bStatus"></div>
+              <button class="cf-send-btn" onclick="submitForm('bug')">Send Bug Report</button>
+            </div>
+          </div>
         </div>
+
+        <!-- Feature Request -->
         <div class="support-card reveal">
           <span class="support-card-icon">💡</span>
           <div class="support-card-title">Feature Request</div>
           <div class="support-card-desc">Have an idea that would make OneTraxx better? We read every suggestion. The best ones make it into the next release.</div>
-          <a href="mailto:info@onetraxx.com?subject=Feature%20Request&body=I%27d%20love%20to%20see%3A%0A%0A" class="support-card-link" onclick="handleMailto(event,'info@onetraxx.com','Feature Request',&quot;I'd love to see:\n\n&quot;)">Share your idea <span class="arr">→</span></a>
+          <button class="support-card-btn" onclick="toggleForm('form-feature', this)">
+            Share your idea <span class="arr">›</span>
+          </button>
+          <div class="contact-form-wrap" id="form-feature">
+            <div class="contact-form">
+              <div>
+                <div class="cf-label">Your email</div>
+                <input class="cf-input" type="email" placeholder="you@example.com" id="fEmail"/>
+              </div>
+              <div>
+                <div class="cf-label">Your idea</div>
+                <textarea class="cf-textarea" placeholder="I'd love to see…" id="fMsg"></textarea>
+              </div>
+              <div class="cf-attach-row">
+                <input type="file" id="fFile" style="display:none" onchange="showFileName('fFile','fFileName')"/>
+                <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()">📎 Attach file</button>
+                <span class="cf-attach-name" id="fFileName"></span>
+              </div>
+              <div class="cf-status" id="fStatus"></div>
+              <button class="cf-send-btn" onclick="submitForm('feature')">Send Idea</button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1927,47 +2102,87 @@
         goPane(4);
       }, 1600);
     }
-    /* ── Email link handler — tries mailto, falls back to copy ───────────── */
-    // Create toast element once
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-      position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
-      background:#1a1a2e; border:1px solid rgba(124,58,237,0.4);
-      color:#F7F4FF; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600;
-      padding:12px 24px; border-radius:12px; z-index:9999;
-      opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;
-      box-shadow:0 8px 32px rgba(0,0,0,0.5);
-    `;
-    document.body.appendChild(toast);
-
-    let toastTimer;
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateX(-50%) translateY(0)';
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(20px)';
-      }, 3000);
+    /* ── Support form dropdowns ───────────────────────────────────────────── */
+    function toggleForm(id, btn) {
+      const wrap = document.getElementById(id);
+      const isOpen = wrap.classList.contains('open');
+      // Close all others first
+      document.querySelectorAll('.contact-form-wrap').forEach(w => w.classList.remove('open'));
+      document.querySelectorAll('.support-card-btn').forEach(b => b.classList.remove('open'));
+      if (!isOpen) {
+        wrap.classList.add('open');
+        btn.classList.add('open');
+        setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+      }
     }
 
-    function handleMailto(e, email, subject, body) {
-      e.preventDefault();
-      const mailto = 'mailto:' + email +
-        (subject ? '?subject=' + encodeURIComponent(subject) : '') +
-        (body ? (subject ? '&' : '?') + 'body=' + encodeURIComponent(body) : '');
+    function showFileName(inputId, nameId) {
+      const file = document.getElementById(inputId).files[0];
+      document.getElementById(nameId).textContent = file ? file.name : '';
+    }
 
-      window.location.href = mailto;
+    const formMap = {
+      general: { email: 'gEmail', msg: 'gMsg', file: 'gFile', status: 'gStatus', subject: 'General Support' },
+      bug:     { email: 'bEmail', msg: 'bMsg', file: 'bFile', status: 'bStatus', subject: 'Bug Report' },
+      feature: { email: 'fEmail', msg: 'fMsg', file: 'fFile', status: 'fStatus', subject: 'Feature Request' },
+    };
 
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(email).then(() => {
-          showToast('✓ ' + email + ' copied to clipboard');
-        }).catch(() => {
-          showToast('Write to us at ' + email);
-        });
-      } else {
-        showToast('Write to us at ' + email);
+    function setStatus(id, type, msg) {
+      const el = document.getElementById(id);
+      el.className = 'cf-status ' + type;
+      el.textContent = msg;
+    }
+
+    async function submitForm(key) {
+      const f = formMap[key];
+      const email = document.getElementById(f.email).value.trim();
+      const msg   = document.getElementById(f.msg).value.trim();
+      const statusEl = f.status;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setStatus(statusEl, 'error', 'Please enter a valid email address.');
+        return;
+      }
+      if (!msg) {
+        setStatus(statusEl, 'error', 'Please write a message before sending.');
+        return;
+      }
+
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      setStatus(statusEl, '', '');
+
+      // Build FormData for Web3Forms (free, no backend needed)
+      const fd = new FormData();
+      fd.append('access_key', 'YOUR_WEB3FORMS_KEY'); // ← replace with your key from web3forms.com
+      fd.append('subject',    f.subject + ' from ' + email);
+      fd.append('from_name',  'OneTraxx Website');
+      fd.append('email',      email);
+      fd.append('message',    msg);
+      fd.append('to',         'info@onetraxx.com');
+
+      const fileInput = document.getElementById(f.file);
+      if (fileInput.files[0]) fd.append('attachment', fileInput.files[0]);
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.success) {
+          setStatus(statusEl, 'success', '✓ Message sent! We\'ll reply to ' + email + ' within 24 hours.');
+          document.getElementById(f.email).value = '';
+          document.getElementById(f.msg).value   = '';
+          fileInput.value = '';
+          document.getElementById(f.file.replace('File','FileName')).textContent = '';
+          btn.textContent = 'Sent ✓';
+          setTimeout(() => { btn.disabled = false; btn.textContent = btn.dataset.label || 'Send'; }, 4000);
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        setStatus(statusEl, 'error', 'Could not send — please email us directly at info@onetraxx.com');
+        btn.disabled = false;
+        btn.textContent = btn.dataset.origLabel || 'Send Message';
       }
     }
   </script>
