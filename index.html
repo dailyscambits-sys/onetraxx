@@ -824,6 +824,138 @@
       .privacy-block { padding: 24px 20px; }
       .privacy-contact-box { padding: 20px; }
     }
+
+    /* ── Terms of Service ──────────────────────────────────────────────────── */
+    #terms {
+      padding: 100px 6%;
+    }
+
+    .terms-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .terms-inner .section-sub {
+      max-width: 100%;
+      margin-bottom: 56px;
+    }
+
+    .terms-block {
+      background: var(--bg2);
+      border: 1px solid rgba(245,158,11,0.12);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      transition: border-color .3s;
+    }
+    .terms-block:hover { border-color: rgba(245,158,11,0.3); }
+
+    .terms-block-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .terms-icon {
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .terms-block-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--txt);
+    }
+
+    .terms-block p {
+      font-size: 14px;
+      color: var(--txt2);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .terms-block p:last-child { margin-bottom: 0; }
+
+    .terms-block ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .terms-block ul li {
+      font-size: 14px;
+      color: var(--txt2);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .terms-block ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    .terms-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .terms-meta-item {
+      font-size: 12px;
+      color: var(--txt3);
+      font-weight: 600;
+    }
+
+    .terms-meta-item span { color: var(--gold); }
+
+    .terms-contact-box {
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .terms-contact-box p {
+      font-size: 14px;
+      color: var(--txt2);
+      line-height: 1.6;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .terms-contact-box a {
+      background: var(--gold);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity .2s, transform .15s;
+    }
+    .terms-contact-box a:hover { opacity: .85; transform: translateY(-1px); }
+
+    @media (max-width: 600px) {
+      .terms-block { padding: 24px 20px; }
+      .terms-contact-box { padding: 20px; }
+    }
+
     /* ── Support Section ───────────────────────────────────────────────────── */
     #support { padding: 100px 6%; }
 
@@ -1234,6 +1366,7 @@
       <a href="#explore">Explore</a>
       <a href="#support">Support</a>
       <a href="#privacy">Privacy</a>
+      <a href="#terms">Terms</a>
       <a href="#download" class="nav-cta">Download App</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -1642,6 +1775,162 @@
     </div>
   </section>
 
+  <!-- ── Terms of Service ───────────────────────────────────────────────────── -->
+  <section id="terms">
+    <div class="terms-inner">
+      <div class="section-label reveal">Legal</div>
+      <h2 class="section-title reveal">Terms of Service</h2>
+      <p class="section-sub reveal">By downloading or using OneTraxx you agree to these terms. Please read them — they're written in plain language and cover everything you need to know.</p>
+
+      <!-- 1. Acceptance -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">✅</span>
+          <div class="terms-block-title">1. Acceptance of Terms</div>
+        </div>
+        <p>By creating an account, using the OneTraxx mobile app, or accessing the OneTraxx website, you agree to be bound by these Terms of Service and our <a href="#privacy" style="color:var(--p2);text-decoration:none;font-weight:700">Privacy Policy</a>. If you do not agree, do not use the app.</p>
+        <p>We may update these terms from time to time. Continued use after an update means you accept the revised terms. We'll always show the effective date below.</p>
+      </div>
+
+      <!-- 2. Eligibility -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">👤</span>
+          <div class="terms-block-title">2. Eligibility</div>
+        </div>
+        <p>You must be at least <strong>13 years old</strong> to use OneTraxx. If you are between 13 and 18, you confirm that your parent or legal guardian has reviewed and agreed to these terms on your behalf.</p>
+        <p>By using the app, you confirm that you are legally permitted to enter into this agreement in your country of residence.</p>
+      </div>
+
+      <!-- 3. Your account -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">🔐</span>
+          <div class="terms-block-title">3. Your Account</div>
+        </div>
+        <p>You are responsible for keeping your login credentials secure. Do not share your account with anyone. You are responsible for all activity that takes place under your account.</p>
+        <ul>
+          <li>Provide accurate registration information and keep it up to date.</li>
+          <li>Notify us immediately at <strong>info@onetraxx.com</strong> if you suspect unauthorised access to your account.</li>
+          <li>You may only hold one account. Creating multiple accounts to evade a ban or suspension is not permitted.</li>
+        </ul>
+      </div>
+
+      <!-- 4. Acceptable use -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">⚖️</span>
+          <div class="terms-block-title">4. Acceptable Use</div>
+        </div>
+        <p>OneTraxx is a fair-play racing platform. When using the app you agree not to:</p>
+        <ul>
+          <li>Cheat, use bots, GPS spoofing tools, or any method to falsify race data or positions.</li>
+          <li>Harass, threaten, or abuse other users through in-app chat or any other feature.</li>
+          <li>Upload content that is illegal, offensive, defamatory, or infringes any third-party rights.</li>
+          <li>Attempt to reverse-engineer, decompile, or tamper with any part of the app or its servers.</li>
+          <li>Use the app in a way that could damage, overload, or impair our infrastructure.</li>
+          <li>Impersonate another person or misrepresent your identity or affiliation.</li>
+          <li>Use the app for any commercial purpose without our prior written consent.</li>
+        </ul>
+        <p>Violations may result in immediate suspension or permanent removal of your account.</p>
+      </div>
+
+      <!-- 5. Safety & physical activity -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">🏃</span>
+          <div class="terms-block-title">5. Safety & Physical Activity</div>
+        </div>
+        <p>OneTraxx involves physical exercise. You participate entirely at your own risk. Before starting any racing activity:</p>
+        <ul>
+          <li>Ensure you are physically fit and healthy enough to exercise. Consult a doctor if you are unsure.</li>
+          <li>Obey all local traffic laws, pedestrian rules, and public safety guidelines while racing.</li>
+          <li>Do not race in unsafe locations, in dangerous weather, or in any way that puts you or others at risk.</li>
+        </ul>
+        <p>OneTraxx is not a medical app. Calorie estimates shown in the app are approximations based on a 70 kg body weight and are <strong>not</strong> medical or fitness advice. Always use your own judgement.</p>
+        <p><strong>OneTraxx accepts no liability for any injury, accident, or harm arising from physical activity conducted while using the app.</strong></p>
+      </div>
+
+      <!-- 6. Race data & estimates -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">📊</span>
+          <div class="terms-block-title">6. Race Data & Estimates</div>
+        </div>
+        <p>Race distance, speed, and calorie figures displayed in the app are estimates generated by simulation or device sensors and may not reflect real-world performance precisely. They are provided for entertainment and motivation purposes only and should not be relied upon for medical, scientific, or professional purposes.</p>
+        <p>We do not guarantee the accuracy, completeness, or reliability of any race statistics shown in the app.</p>
+      </div>
+
+      <!-- 7. User content -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">💬</span>
+          <div class="terms-block-title">7. User Content</div>
+        </div>
+        <p>You retain ownership of any content you submit (display name, profile photo, chat messages). By submitting content you grant OneTraxx a non-exclusive, royalty-free licence to store, display, and transmit that content solely to operate the service.</p>
+        <ul>
+          <li>Do not upload photos or send messages that are illegal, hateful, sexual, or otherwise harmful.</li>
+          <li>We may remove any content that violates these terms without prior notice.</li>
+          <li>Reported content will be reviewed and actioned within a reasonable timeframe.</li>
+        </ul>
+      </div>
+
+      <!-- 8. Intellectual property -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">©️</span>
+          <div class="terms-block-title">8. Intellectual Property</div>
+        </div>
+        <p>The OneTraxx name, logo, app design, and all original content on this website are owned by the OneTraxx team and protected by copyright and trademark law. You may not copy, reproduce, or redistribute any part of them without our written permission.</p>
+        <p>The race music tracks used in the app are licensed for use under their respective licences (primarily Pixabay commercial licences). Attribution requirements, where applicable, are respected by the OneTraxx team.</p>
+      </div>
+
+      <!-- 9. Account suspension & termination -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">🚫</span>
+          <div class="terms-block-title">9. Suspension & Termination</div>
+        </div>
+        <p>We reserve the right to suspend or permanently delete any account that violates these terms, without notice or liability. Reasons include but are not limited to: cheating, harassment, abuse, or any conduct that harms other users or the integrity of the platform.</p>
+        <p>You may delete your own account at any time via <strong>Profile → Settings → Delete Account</strong> in the app, or by emailing <strong>info@onetraxx.com</strong>. On deletion, your data is removed within 30 days as described in our Privacy Policy.</p>
+      </div>
+
+      <!-- 10. Disclaimers & limitation of liability -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">🛡️</span>
+          <div class="terms-block-title">10. Disclaimers & Limitation of Liability</div>
+        </div>
+        <p>OneTraxx is provided <strong>"as is"</strong> without warranties of any kind, express or implied. We do not guarantee uninterrupted, error-free service. The app may be temporarily unavailable due to maintenance, updates, or circumstances beyond our control.</p>
+        <p>To the fullest extent permitted by applicable law, OneTraxx shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of — or inability to use — the app, including but not limited to loss of data, personal injury, or property damage.</p>
+        <p>Our total liability to you for any claim arising from these terms shall not exceed the amount you paid us in the 12 months preceding the claim (which for free users is zero).</p>
+      </div>
+
+      <!-- 11. Governing law -->
+      <div class="terms-block reveal">
+        <div class="terms-block-header">
+          <span class="terms-icon">🌐</span>
+          <div class="terms-block-title">11. Governing Law</div>
+        </div>
+        <p>These terms are governed by the laws of India. Any disputes arising from these terms or your use of OneTraxx shall be subject to the exclusive jurisdiction of the courts of India.</p>
+        <p>If any provision of these terms is found to be unenforceable, the remaining provisions will continue in full force and effect.</p>
+      </div>
+
+      <!-- Contact box -->
+      <div class="terms-contact-box reveal">
+        <p>Questions about these terms? Contact us and we'll respond within 48 hours.</p>
+        <a href="mailto:info@onetraxx.com">Email Us →</a>
+      </div>
+
+      <!-- Meta -->
+      <div class="terms-meta reveal">
+        <div class="terms-meta-item">Last updated: <span>April 2026</span></div>
+        <div class="terms-meta-item">Effective date: <span>April 2026</span></div>
+        <div class="terms-meta-item">Contact: <span>info@onetraxx.com</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Support ─────────────────────────────────────────────────────────────── -->
   <section id="support">
     <div class="support-inner">
@@ -1876,6 +2165,7 @@
       <a href="#download">Download</a>
       <a href="#support">Support</a>
       <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Service</a>
       <a href="mailto:info@onetraxx.com">Contact</a>
     </div>
     <div class="footer-copy">© 2026 OneTraxx. Race real people. Live.</div>
