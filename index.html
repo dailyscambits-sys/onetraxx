@@ -1953,31 +1953,22 @@
     }
 
     function handleMailto(e, email, subject, body) {
-      // Try to open mailto — if it fails (no mail client), copy email instead
+      e.preventDefault();
       const mailto = 'mailto:' + email +
         (subject ? '?subject=' + encodeURIComponent(subject) : '') +
         (body ? (subject ? '&' : '?') + 'body=' + encodeURIComponent(body) : '');
 
-      // Open the mailto link
-      const a = document.createElement('a');
-      a.href = mailto;
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      window.location.href = mailto;
 
-      // Also copy the email address as a reliable fallback
       if (navigator.clipboard) {
         navigator.clipboard.writeText(email).then(() => {
           showToast('✓ ' + email + ' copied to clipboard');
         }).catch(() => {
-          showToast('Open your email app and write to ' + email);
+          showToast('Write to us at ' + email);
         });
       } else {
-        showToast('Open your email app and write to ' + email);
+        showToast('Write to us at ' + email);
       }
-
-      e.preventDefault();
     }
   </script>
 </body>
