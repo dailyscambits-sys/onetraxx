@@ -1671,8 +1671,8 @@
                 <textarea class="cf-textarea" placeholder="How can we help you?" id="gMsg"></textarea>
               </div>
               <div class="cf-attach-row">
-                <input type="file" id="gFile" style="display:none" onchange="showFileName('gFile','gFileName')"/>
-                <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()">📎 Attach file</button>
+                <input type="file" id="gFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('gFile','gFileName')"/>
+                <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()">📎 Attach image</button>
                 <span class="cf-attach-name" id="gFileName"></span>
               </div>
               <div class="cf-status" id="gStatus"></div>
@@ -1700,7 +1700,7 @@
                 <textarea class="cf-textarea" placeholder="Device, OS version, steps to reproduce, what happened…" id="bMsg"></textarea>
               </div>
               <div class="cf-attach-row">
-                <input type="file" id="bFile" style="display:none" accept="image/*,video/*" onchange="showFileName('bFile','bFileName')"/>
+                <input type="file" id="bFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('bFile','bFileName')"/>
                 <button class="cf-attach-btn" onclick="document.getElementById('bFile').click()">📎 Attach screenshot</button>
                 <span class="cf-attach-name" id="bFileName"></span>
               </div>
@@ -1729,8 +1729,8 @@
                 <textarea class="cf-textarea" placeholder="I'd love to see…" id="fMsg"></textarea>
               </div>
               <div class="cf-attach-row">
-                <input type="file" id="fFile" style="display:none" onchange="showFileName('fFile','fFileName')"/>
-                <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()">📎 Attach file</button>
+                <input type="file" id="fFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('fFile','fFileName')"/>
+                <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()">📎 Attach image</button>
                 <span class="cf-attach-name" id="fFileName"></span>
               </div>
               <div class="cf-status" id="fStatus"></div>
@@ -2106,7 +2106,6 @@
     function toggleForm(id, btn) {
       const wrap = document.getElementById(id);
       const isOpen = wrap.classList.contains('open');
-      // Close all others first
       document.querySelectorAll('.contact-form-wrap').forEach(w => w.classList.remove('open'));
       document.querySelectorAll('.support-card-btn').forEach(b => b.classList.remove('open'));
       if (!isOpen) {
@@ -2116,73 +2115,108 @@
       }
     }
 
+    const ALLOWED_TYPES = ['image/jpeg','image/png','image/gif','image/webp'];
+    const MAX_SIZE_MB   = 5;
+    const MAX_SIZE_B    = MAX_SIZE_MB * 1024 * 1024;
+
     function showFileName(inputId, nameId) {
-      const file = document.getElementById(inputId).files[0];
-      document.getElementById(nameId).textContent = file ? file.name : '';
+      const input    = document.getElementById(inputId);
+      const nameEl   = document.getElementById(nameId);
+      const file     = input.files[0];
+
+      if (!file) { nameEl.textContent = ''; nameEl.style.color = ''; return; }
+
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        nameEl.textContent = '✕ Only JPG, PNG, GIF or WebP allowed';
+        nameEl.style.color = 'var(--red)';
+        input.value = '';
+        return;
+      }
+
+      if (file.size > MAX_SIZE_B) {
+        nameEl.textContent = '✕ File too large — max 5 MB';
+        nameEl.style.color = 'var(--red)';
+        input.value = '';
+        return;
+      }
+
+      nameEl.style.color = 'var(--grn)';
+      nameEl.textContent = '✓ ' + file.name + ' (' + (file.size / (1024*1024)).toFixed(1) + ' MB)';
     }
 
     const formMap = {
-      general: { email: 'gEmail', msg: 'gMsg', file: 'gFile', status: 'gStatus', subject: 'General Support' },
-      bug:     { email: 'bEmail', msg: 'bMsg', file: 'bFile', status: 'bStatus', subject: 'Bug Report' },
-      feature: { email: 'fEmail', msg: 'fMsg', file: 'fFile', status: 'fStatus', subject: 'Feature Request' },
+      general: { email: 'gEmail', msg: 'gMsg', file: 'gFile', fileName: 'gFileName', status: 'gStatus', subject: 'General Support',  sendLabel: 'Send Message' },
+      bug:     { email: 'bEmail', msg: 'bMsg', file: 'bFile', fileName: 'bFileName', status: 'bStatus', subject: 'Bug Report',        sendLabel: 'Send Bug Report' },
+      feature: { email: 'fEmail', msg: 'fMsg', file: 'fFile', fileName: 'fFileName', status: 'fStatus', subject: 'Feature Request',   sendLabel: 'Send Idea' },
     };
 
     function setStatus(id, type, msg) {
       const el = document.getElementById(id);
-      el.className = 'cf-status ' + type;
+      el.className = 'cf-status' + (type ? ' ' + type : '');
       el.textContent = msg;
     }
 
     async function submitForm(key) {
-      const f = formMap[key];
+      const f   = formMap[key];
+      const btn = event.currentTarget;
       const email = document.getElementById(f.email).value.trim();
       const msg   = document.getElementById(f.msg).value.trim();
-      const statusEl = f.status;
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setStatus(statusEl, 'error', 'Please enter a valid email address.');
+        setStatus(f.status, 'error', 'Please enter a valid email address.');
         return;
       }
       if (!msg) {
-        setStatus(statusEl, 'error', 'Please write a message before sending.');
+        setStatus(f.status, 'error', 'Please write a message before sending.');
         return;
       }
 
-      const btn = event.target;
+      const fileInput = document.getElementById(f.file);
+      const file = fileInput.files[0];
+      if (file) {
+        if (!ALLOWED_TYPES.includes(file.type)) {
+          setStatus(f.status, 'error', 'Only JPG, PNG, GIF or WebP images are allowed.');
+          return;
+        }
+        if (file.size > MAX_SIZE_B) {
+          setStatus(f.status, 'error', 'File is too large — maximum size is 5 MB.');
+          return;
+        }
+      }
+
       btn.disabled = true;
       btn.textContent = 'Sending…';
-      setStatus(statusEl, '', '');
-
-      // Build FormData for Web3Forms (free, no backend needed)
-      const fd = new FormData();
-      fd.append('access_key', 'b4df5755-b676-44cd-ac69-bbf5db3f03e5'); // ← replace with your key from web3forms.com
-      fd.append('subject',    f.subject + ' from ' + email);
-      fd.append('from_name',  'OneTraxx Website');
-      fd.append('email',      email);
-      fd.append('message',    msg);
-      fd.append('to',         'info@onetraxx.com');
-
-      const fileInput = document.getElementById(f.file);
-      if (fileInput.files[0]) fd.append('attachment', fileInput.files[0]);
+      setStatus(f.status, '', '');
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: 'YOUR_WEB3FORMS_KEY',   // ← replace at web3forms.com (free, takes 1 min)
+            subject:    f.subject + ' — OneTraxx Website',
+            from_name:  'OneTraxx Support Form',
+            replyto:    email,
+            email:      email,
+            message:    msg,
+          }),
+        });
         const data = await res.json();
         if (data.success) {
-          setStatus(statusEl, 'success', '✓ Message sent! We\'ll reply to ' + email + ' within 24 hours.');
+          setStatus(f.status, 'success', '✓ Message sent! We\'ll reply to ' + email + ' within 24 hours.');
           document.getElementById(f.email).value = '';
           document.getElementById(f.msg).value   = '';
-          fileInput.value = '';
-          document.getElementById(f.file.replace('File','FileName')).textContent = '';
+          document.getElementById(f.file).value  = '';
+          document.getElementById(f.fileName).textContent = '';
           btn.textContent = 'Sent ✓';
-          setTimeout(() => { btn.disabled = false; btn.textContent = btn.dataset.label || 'Send'; }, 4000);
+          setTimeout(() => { btn.disabled = false; btn.textContent = f.sendLabel; }, 4000);
         } else {
-          throw new Error(data.message || 'Submission failed');
+          throw new Error(data.message || 'Failed');
         }
       } catch (err) {
-        setStatus(statusEl, 'error', 'Could not send — please email us directly at info@onetraxx.com');
+        setStatus(f.status, 'error', 'Could not send — please email us at info@onetraxx.com');
         btn.disabled = false;
-        btn.textContent = btn.dataset.origLabel || 'Send Message';
+        btn.textContent = f.sendLabel;
       }
     }
   </script>
