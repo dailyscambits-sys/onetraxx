@@ -1073,6 +1073,7 @@
       text-overflow: ellipsis;
       max-width: 160px;
     }
+    .cf-hint { font-size: 11px; color: var(--txt3); margin-top: 6px; }
 
     .cf-send-btn {
       width: 100%;
@@ -1421,12 +1422,12 @@
       <div class="feature-card fc-green reveal">
         <span class="feature-icon">📍</span>
         <h3 class="feature-title">Live GPS Tracking</h3>
-        <p class="feature-desc">Watch every racer move on the map in real time. See who's ahead, who's fading, and who's about to make a move — all from your screen.</p>
+        <p class="feature-desc">Watch every racer advance along the track in real time. See who's ahead, who's fading, and who's about to make a move — all from your screen.</p>
       </div>
       <div class="feature-card fc-purple reveal">
         <span class="feature-icon">🔑</span>
         <h3 class="feature-title">One Code to Race</h3>
-        <p class="feature-desc">Share a 6-digit join code with anyone in the world. You need at least one opponent to start — they enter the code, they're in. No accounts required for guests.</p>
+        <p class="feature-desc">Share a 6-digit join code with anyone in the world. You need at least one opponent to start — they enter the code, they're in.</p>
       </div>
       <div class="feature-card fc-gold reveal">
         <span class="feature-icon">🏆</span>
@@ -1447,12 +1448,12 @@
       <div class="feature-card fc-purple reveal">
         <span class="feature-icon">🎴</span>
         <h3 class="feature-title">Branded Share Cards</h3>
-        <p class="feature-desc">Challenge anyone with a stunning branded race card. One tap shares your race code, distance and start time to every platform.</p>
+        <p class="feature-desc">Challenge anyone with a stunning branded race card. One tap shares your race code and distance to every platform.</p>
       </div>
       <div class="feature-card fc-green reveal">
-        <span class="feature-icon">📅</span>
-        <h3 class="feature-title">Schedule Races</h3>
-        <p class="feature-desc">Plan races days in advance. Set date, time and distance — then invite your crew. Reminders go out automatically so nobody misses the start.</p>
+        <span class="feature-icon">🎙️</span>
+        <h3 class="feature-title">In-Race Voice</h3>
+        <p class="feature-desc">Tap and hold to fire off quick voice messages mid-race. Hype your crew, call your move, or talk trash — heard live by everyone in the room.</p>
       </div>
       <div class="feature-card fc-gold reveal">
         <span class="feature-icon">👥</span>
@@ -1473,7 +1474,7 @@
             <div class="step-num">1</div>
             <div class="step-content">
               <h4>Create or Join a Room</h4>
-              <p>Tap "Create Race", set your distance and start time — or paste a 6-digit code to join someone else's room. You need at least one other racer to begin.</p>
+              <p>Tap "Create Race", set your distance — or paste a 6-digit code to join someone else's room. You need at least one other racer to begin.</p>
             </div>
           </div>
           <div class="step reveal">
@@ -1563,7 +1564,7 @@
       <div>
         <div class="section-label reveal">Global Rooms</div>
         <h2 class="section-title reveal">Find Your Next Race</h2>
-        <p class="section-sub reveal">Browse open races happening right now — filter by distance, city or time. Anyone can join a public room in one tap.</p>
+        <p class="section-sub reveal">Browse open races happening right now. Anyone can join a public room in one tap.</p>
       </div>
       <div class="rooms-list reveal">
         <div class="room-card-mini">
@@ -1656,9 +1657,10 @@
           <li><strong>Account data</strong> — email address and password (if you create an account). Phone number if you choose SMS sign-in. These are stored securely on our servers.</li>
           <li><strong>Profile data</strong> — display name and profile photo (optional). You control what you share.</li>
           <li><strong>Race data</strong> — distances covered, finish times, pace, and position during races. This powers your stats and race history.</li>
-          <li><strong>Race replay frames</strong> — up to 200 position snapshots per race, stored to enable the post-race preview feature.</li>
+          <li><strong>Location data</strong> — while you are in a live race, your GPS position (latitude and longitude) is broadcast in real time to the other racers in your room to power the live map and leaderboard, and periodic position checkpoints (your latest coordinates and distance covered) are saved on our servers during the race to verify results and let you rejoin if you disconnect. Location is collected only during active races, never in the background.</li>
+          <li><strong>Voice messages</strong> — if you record and send a voice message during a race, the audio clip is transmitted to the other racers in your room and may be temporarily stored on our servers to deliver it. Microphone access is requested only at the moment you record a message and is never used otherwise.</li>
+          <li><strong>Race replay frames</strong> — up to 600 position snapshots per race, stored to enable the post-race preview feature.</li>
           <li><strong>Device & usage data</strong> — app version, device OS, and basic crash logs collected anonymously to improve stability.</li>
-          <li><strong>Guest users</strong> — only a temporary session name. No email, no account, no persistent data stored.</li>
         </ul>
       </div>
 
@@ -1669,11 +1671,11 @@
           <div class="privacy-block-title">3. What We Do Not Collect</div>
         </div>
         <ul>
-          <li>We do <strong>not</strong> collect or store real-time GPS coordinates. Race distance is tracked locally on your device.</li>
+          <li>We do <strong>not</strong> track your location in the background or when you are not in an active race. GPS is used only during a live race (see "What We Collect" above).</li>
           <li>We do <strong>not</strong> sell your data to third parties — ever.</li>
           <li>We do <strong>not</strong> run advertising or share data with ad networks.</li>
           <li>We do <strong>not</strong> access your contacts, calendar, or any data outside the permissions you explicitly grant.</li>
-          <li>We do <strong>not</strong> collect health or medical data. Calorie estimates displayed in the app are approximate figures for 70 kg body weight and are not medical advice.</li>
+          <li>We do <strong>not</strong> collect health or medical data. Calorie estimates displayed in the app are approximations based on the body weight you optionally provide in your profile (or a 70 kg default if you haven't set one) and are not medical advice.</li>
         </ul>
       </div>
 
@@ -1691,15 +1693,16 @@
         </ul>
       </div>
 
-      <!-- 5. Camera & photo permissions -->
+      <!-- 5. Camera, Photo & Microphone Permissions -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
           <span class="privacy-icon">📷</span>
-          <div class="privacy-block-title">5. Camera & Photo Permissions</div>
+          <div class="privacy-block-title">5. Camera, Photo & Microphone Permissions</div>
         </div>
         <p>The app requests camera and photo library access only when you choose to set a profile picture. These permissions are optional — you can use the full app without granting them.</p>
         <p>Photos are compressed, uploaded to our secure servers, and used solely to display your avatar to other racers. We do not scan, analyse, or share your photos.</p>
         <p>You can revoke these permissions at any time in your device Settings → Apps → OneTraxx → Permissions.</p>
+        <p>Microphone access is requested only when you record an in-race voice message. It is optional, used solely to capture and send that clip to other racers, and never used to listen in the background.</p>
       </div>
 
       <!-- 6. Data sharing -->
@@ -1768,7 +1771,7 @@
 
       <!-- Meta -->
       <div class="privacy-meta reveal">
-        <div class="privacy-meta-item">Last updated: <span>January 2026</span></div>
+        <div class="privacy-meta-item">Last updated: <span>June 2026</span></div>
         <div class="privacy-meta-item">Effective date: <span>January 2026</span></div>
         <div class="privacy-meta-item">Contact: <span>info@onetraxx.com</span></div>
       </div>
@@ -1847,7 +1850,7 @@
           <li>Obey all local traffic laws, pedestrian rules, and public safety guidelines while racing.</li>
           <li>Do not race in unsafe locations, in dangerous weather, or in any way that puts you or others at risk.</li>
         </ul>
-        <p>OneTraxx is not a medical app. Calorie estimates shown in the app are approximations based on a 70 kg body weight and are <strong>not</strong> medical or fitness advice. Always use your own judgement.</p>
+        <p>OneTraxx is not a medical app. Calorie estimates shown in the app are approximations based on the body weight you set in your profile (defaulting to 70 kg if you haven't provided one) and are <strong>not</strong> medical or fitness advice. Always use your own judgement.</p>
         <p><strong>OneTraxx accepts no liability for any injury, accident, or harm arising from physical activity conducted while using the app.</strong></p>
       </div>
 
@@ -1964,6 +1967,7 @@
                 <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()">📎 Attach image</button>
                 <span class="cf-attach-name" id="gFileName"></span>
               </div>
+              <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
               <div class="cf-status" id="gStatus"></div>
               <button class="cf-send-btn" onclick="submitForm('general')">Send Message</button>
             </div>
@@ -1993,6 +1997,7 @@
                 <button class="cf-attach-btn" onclick="document.getElementById('bFile').click()">📎 Attach screenshot</button>
                 <span class="cf-attach-name" id="bFileName"></span>
               </div>
+              <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
               <div class="cf-status" id="bStatus"></div>
               <button class="cf-send-btn" onclick="submitForm('bug')">Send Bug Report</button>
             </div>
@@ -2022,6 +2027,7 @@
                 <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()">📎 Attach image</button>
                 <span class="cf-attach-name" id="fFileName"></span>
               </div>
+              <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
               <div class="cf-status" id="fStatus"></div>
               <button class="cf-send-btn" onclick="submitForm('feature')">Send Idea</button>
             </div>
@@ -2036,83 +2042,26 @@
           <div class="delete-panel-header-icon">🗑️</div>
           <div class="delete-panel-header-text">
             <h3>Delete My Account</h3>
-            <p>Permanently removes your profile, race history, friends list, and all associated data. This action cannot be undone. Verify your identity first.</p>
+            <p>Permanently removes your profile, race history, friends list, and all associated data. This action cannot be undone.</p>
           </div>
         </div>
 
         <div class="delete-panel-body">
-          <!-- Step indicator -->
-          <div class="del-steps" id="delSteps">
-            <div class="del-step-item">
-              <div class="del-step-circle active" id="sc1">1</div>
-              <div class="del-step-label active" id="sl1">Verify Identity</div>
-            </div>
-            <div class="del-step-line" id="line1"></div>
-            <div class="del-step-item">
-              <div class="del-step-circle" id="sc2">2</div>
-              <div class="del-step-label" id="sl2">Enter OTP</div>
-            </div>
-            <div class="del-step-line" id="line2"></div>
-            <div class="del-step-item">
-              <div class="del-step-circle" id="sc3">3</div>
-              <div class="del-step-label" id="sl3">Confirm</div>
-            </div>
-          </div>
-
-          <!-- Pane 1: Identity input -->
-          <div class="del-pane active" id="pane1">
-            <div class="del-field-label">How did you register?</div>
-            <div class="del-method-toggle">
-              <button class="del-method-btn active" id="btnEmail" onclick="setMethod('email')">📧 Email</button>
-              <button class="del-method-btn" id="btnPhone" onclick="setMethod('phone')">📱 Phone</button>
-            </div>
-
-            <div id="emailField">
-              <div class="del-field-label">Email address</div>
-              <input class="del-input" type="email" id="delEmail" placeholder="you@example.com" autocomplete="email"/>
-            </div>
-            <div id="phoneField" style="display:none">
-              <div class="del-field-label">Phone number</div>
-              <input class="del-input" type="tel" id="delPhone" placeholder="+91 98765 43210" autocomplete="tel"/>
-            </div>
-
-            <div class="del-msg" id="msg1"></div>
-            <button class="del-btn del-btn-primary" id="btnSendOtp" onclick="sendOtp()">Send Verification Code</button>
-          </div>
-
-          <!-- Pane 2: OTP entry -->
-          <div class="del-pane" id="pane2">
-            <div class="del-field-label">Verification code</div>
-            <p style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.6" id="otpSentTo">We sent a 6-digit code to your address.</p>
-            <div class="del-otp-row">
-              <input class="del-otp-input" type="text" id="delOtp" maxlength="6" placeholder="000000" inputmode="numeric" autocomplete="one-time-code"/>
-            </div>
-            <div class="del-msg" id="msg2"></div>
-            <button class="del-btn del-btn-primary" id="btnVerifyOtp" onclick="verifyOtp()">Verify Code</button>
-            <div class="del-resend" id="resendWrap">
-              Didn't receive it? <span id="resendBtn" onclick="resendOtp()">Resend code</span>
-              <span id="resendTimer" style="display:none;color:var(--txt3);font-weight:600;cursor:default;text-decoration:none"> (resend in <span id="resendCountdown">30</span>s)</span>
-            </div>
-          </div>
-
-          <!-- Pane 3: Final confirmation -->
-          <div class="del-pane" id="pane3">
-            <div class="del-warning-box">
-              ⚠️ <strong>This cannot be undone.</strong> Your account, race history, profile photo, friends list, and all race data will be permanently deleted within 30 days.
-            </div>
-            <div class="del-field-label">Type DELETE to confirm</div>
-            <input class="del-input" type="text" id="delConfirmWord" placeholder="DELETE" oninput="checkConfirmWord()" autocomplete="off"/>
-            <div class="del-msg" id="msg3"></div>
-            <button class="del-btn del-btn-danger" id="btnDeleteFinal" onclick="finalDelete()" disabled>Yes, Delete My Account Permanently</button>
-          </div>
-
-          <!-- Pane 4: Success -->
-          <div class="del-pane" id="pane4">
-            <div class="del-success-wrap">
-              <div class="del-success-icon">✅</div>
-              <div class="del-success-title">Request Submitted</div>
-              <div class="del-success-sub">Your account deletion request has been received. All your data will be permanently removed within 30 days. A confirmation has been sent to your registered contact. If you change your mind within 7 days, email <a href="mailto:info@onetraxx.com" style="color:var(--p2)">info@onetraxx.com</a>.</div>
-            </div>
+          <p style="font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:16px">
+            Account deletion is handled securely inside the OneTraxx app, where you're already signed in — there's no need to re-verify your identity on the web.
+          </p>
+          <p style="font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:16px">
+            <strong style="color:var(--txt)">To delete your account:</strong> open the app and go to
+            <strong style="color:var(--txt)">Profile → Settings → Delete Account</strong>, then follow the prompts.
+          </p>
+          <p style="font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:16px">
+            This permanently removes your profile, race history, friends list, avatar, and all associated data within
+            <strong style="color:var(--txt)">30 days</strong>. This action cannot be undone.
+          </p>
+          <div class="del-warning-box">
+            ⚠️ <strong>No longer have the app installed?</strong> Email
+            <a href="mailto:info@onetraxx.com" style="color:#D97706;font-weight:700">info@onetraxx.com</a>
+            from your registered email address and we'll process the deletion for you.
           </div>
         </div>
       </div>
@@ -2123,7 +2072,7 @@
   <section id="download">
     <div class="download-card reveal">
       <h2 class="section-title">Download OneTraxx</h2>
-      <p class="section-sub">Free to download. Race as a guest — no account needed. Upgrade when you want to save your stats and build your crew.</p>
+      <p class="section-sub">Free to download. Create a race or join with a code in seconds.</p>
       <div class="store-btns">
         <!-- TODO: Replace # with your App Store link -->
         <a href="#" class="store-btn">
@@ -2236,162 +2185,6 @@
         }
       });
     }, 1200);
-    /* ── Account Deletion OTP Flow ────────────────────────────────────────── */
-    let delMethod = 'email';
-    let otpVerified = false;
-    let resendInterval = null;
-
-    function setMethod(m) {
-      delMethod = m;
-      document.getElementById('btnEmail').classList.toggle('active', m === 'email');
-      document.getElementById('btnPhone').classList.toggle('active', m === 'phone');
-      document.getElementById('emailField').style.display = m === 'email' ? 'block' : 'none';
-      document.getElementById('phoneField').style.display = m === 'phone' ? 'block' : 'none';
-      clearMsg('msg1');
-    }
-
-    function showMsg(id, type, text) {
-      const el = document.getElementById(id);
-      el.className = 'del-msg ' + type + ' show';
-      el.textContent = text;
-    }
-
-    function clearMsg(id) {
-      const el = document.getElementById(id);
-      el.className = 'del-msg';
-      el.textContent = '';
-    }
-
-    function stepDone(n) {
-      const sc = document.getElementById('sc' + n);
-      const sl = document.getElementById('sl' + n);
-      sc.className = 'del-step-circle done';
-      sc.textContent = '✓';
-      sl.className = 'del-step-label done';
-    }
-
-    function stepActive(n) {
-      const sc = document.getElementById('sc' + n);
-      const sl = document.getElementById('sl' + n);
-      sc.className = 'del-step-circle active';
-      sl.className = 'del-step-label active';
-    }
-
-    function goPane(n) {
-      document.querySelectorAll('.del-pane').forEach(p => p.classList.remove('active'));
-      document.getElementById('pane' + n).classList.add('active');
-    }
-
-    function sendOtp() {
-      clearMsg('msg1');
-      const btn = document.getElementById('btnSendOtp');
-      const val = delMethod === 'email'
-        ? document.getElementById('delEmail').value.trim()
-        : document.getElementById('delPhone').value.trim();
-
-      if (!val) {
-        showMsg('msg1', 'error', delMethod === 'email' ? 'Please enter your email address.' : 'Please enter your phone number.');
-        return;
-      }
-      if (delMethod === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        showMsg('msg1', 'error', 'Please enter a valid email address.');
-        return;
-      }
-      if (delMethod === 'phone' && !/^\+?[\d\s\-()]{7,15}$/.test(val)) {
-        showMsg('msg1', 'error', 'Please enter a valid phone number with country code.');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-
-      // Simulate OTP send (replace with real API call to your backend)
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = 'Send Verification Code';
-        stepDone(1);
-        document.getElementById('line1').classList.add('done');
-        stepActive(2);
-        const dest = delMethod === 'email' ? val : val;
-        document.getElementById('otpSentTo').textContent =
-          'We sent a 6-digit code to ' + (delMethod === 'email' ? val : val) + '. Check your ' + (delMethod === 'email' ? 'inbox (and spam folder)' : 'messages') + '.';
-        goPane(2);
-        startResendTimer();
-      }, 1400);
-    }
-
-    function startResendTimer() {
-      let secs = 30;
-      document.getElementById('resendBtn').style.display = 'none';
-      document.getElementById('resendTimer').style.display = 'inline';
-      if (resendInterval) clearInterval(resendInterval);
-      resendInterval = setInterval(() => {
-        secs--;
-        document.getElementById('resendCountdown').textContent = secs;
-        if (secs <= 0) {
-          clearInterval(resendInterval);
-          document.getElementById('resendTimer').style.display = 'none';
-          document.getElementById('resendBtn').style.display = 'inline';
-        }
-      }, 1000);
-    }
-
-    function resendOtp() {
-      showMsg('msg2', 'info', 'A new code has been sent.');
-      startResendTimer();
-    }
-
-    function verifyOtp() {
-      clearMsg('msg2');
-      const otp = document.getElementById('delOtp').value.trim();
-      if (otp.length < 6) {
-        showMsg('msg2', 'error', 'Please enter the full 6-digit code.');
-        return;
-      }
-
-      const btn = document.getElementById('btnVerifyOtp');
-      btn.disabled = true;
-      btn.textContent = 'Verifying…';
-
-      // Simulate OTP verification (replace with real backend call)
-      // For demo: any 6-digit code passes. In production verify server-side.
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = 'Verify Code';
-        if (otp.length === 6 && /^\d+$/.test(otp)) {
-          otpVerified = true;
-          stepDone(2);
-          document.getElementById('line2').classList.add('done');
-          stepActive(3);
-          goPane(3);
-          if (resendInterval) clearInterval(resendInterval);
-        } else {
-          showMsg('msg2', 'error', 'Incorrect code. Please try again or request a new one.');
-        }
-      }, 1200);
-    }
-
-    function checkConfirmWord() {
-      const val = document.getElementById('delConfirmWord').value;
-      document.getElementById('btnDeleteFinal').disabled = val !== 'DELETE';
-    }
-
-    function finalDelete() {
-      if (!otpVerified) return;
-      const word = document.getElementById('delConfirmWord').value;
-      if (word !== 'DELETE') return;
-
-      const btn = document.getElementById('btnDeleteFinal');
-      btn.disabled = true;
-      btn.textContent = 'Processing…';
-
-      // Simulate deletion request (replace with real API call)
-      // In production: POST to your backend with the verified token
-      setTimeout(() => {
-        stepDone(3);
-        goPane(4);
-      }, 1600);
-    }
     /* ── Support form dropdowns ───────────────────────────────────────────── */
     function toggleForm(id, btn) {
       const wrap = document.getElementById(id);
@@ -2408,6 +2201,16 @@
     const ALLOWED_TYPES = ['image/jpeg','image/png','image/gif','image/webp'];
     const MAX_SIZE_MB   = 5;
     const MAX_SIZE_B    = MAX_SIZE_MB * 1024 * 1024;
+    const SUPPORT_FN_URL = 'https://sdshilwrjgckdncbezsi.supabase.co/functions/v1/submit-support';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkc2hpbHdyamdja2RuY2JlenNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NzUxOTAsImV4cCI6MjA5NDQ1MTE5MH0.YK9300WKF_rUm9-ce3LlvjxUy2TsKeViga6-k0JrZFc';
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload  = () => resolve(String(r.result).split(',')[1]); // strip "data:...;base64,"
+        r.onerror = reject;
+        r.readAsDataURL(file);
+      });
+    }
 
     function showFileName(inputId, nameId) {
       const input    = document.getElementById(inputId);
@@ -2479,17 +2282,20 @@
       setStatus(f.status, '', '');
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+        const payload = { email: email, message: msg, subject: f.subject };
+        if (file) {
+          payload.fileBase64 = await fileToBase64(file);
+          payload.fileName   = file.name;
+          payload.fileType   = file.type;
+        }
+        const res = await fetch(SUPPORT_FN_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            access_key: 'YOUR_WEB3FORMS_KEY',   // ← replace at web3forms.com (free, takes 1 min)
-            subject:    f.subject + ' — OneTraxx Website',
-            from_name:  'OneTraxx Support Form',
-            replyto:    email,
-            email:      email,
-            message:    msg,
-          }),
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify(payload),
         });
         const data = await res.json();
         if (data.success) {
@@ -2501,7 +2307,7 @@
           btn.textContent = 'Sent ✓';
           setTimeout(() => { btn.disabled = false; btn.textContent = f.sendLabel; }, 4000);
         } else {
-          throw new Error(data.message || 'Failed');
+          throw new Error(data.error || 'Failed');
         }
       } catch (err) {
         setStatus(f.status, 'error', 'Could not send — please email us at info@onetraxx.com');
