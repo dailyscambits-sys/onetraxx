@@ -20,59 +20,88 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:     #070711;
-      --bg2:    #10101C;
-      --bg3:    #171429;
-      --bg4:    #27213C;
+      --bg:     #0B140F;
+      --bg2:    rgba(255,255,255,0.07);
+      --bg3:    rgba(255,255,255,0.05);
+      --bg4:    rgba(255,255,255,0.16);
       --p:      #7C3AED;
       --p2:     #8B5CF6;
       --p-glow: rgba(124,58,237,0.35);
       --txt:    #F7F4FF;
-      --txt2:   #C4C0D8;
-      --txt3:   #706A8E;
+      --txt2:   #D8D5E8;
+      --txt3:   #9691AE;
       --grn:    #10B981;
       --gold:   #F59E0B;
       --live:   #22C55E;
       --red:    #EF4444;
       --r:      14px;
+      --glass-border: rgba(255,255,255,0.16);
+      --glass-blur: blur(22px) saturate(160%);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: #07020f;
       color: var(--txt);
       font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
     }
 
-    /* ── Background mesh ───────────────────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 20% 0%, rgba(124,58,237,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 50% at 90% 30%, rgba(139,92,246,0.10) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(16,185,129,0.07) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── Grid lines overlay ────────────────────────────────────────────────── */
+    /* ── Grain texture (keeps flat gradients from feeling synthetic) ───────── */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0.045;
+      mix-blend-mode: overlay;
       pointer-events: none;
-      z-index: 0;
+      z-index: 2;
     }
 
-    section, nav, footer { position: relative; z-index: 1; }
+    /* ── Racing scene: fixed photo backdrop, purple duotone ─────────────────── */
+    .scene-bg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+      background: #0B0512;
+    }
+    .scene-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.78) contrast(1.08) saturate(0.9);
+    }
+    .scene-tint {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(175deg, #6D28D9 0%, #4C1D95 45%, #1E0B3D 100%);
+      mix-blend-mode: color;
+      opacity: 0.92;
+    }
+    .scene-tint-2 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(167,139,250,0.35) 0%, rgba(124,58,237,0) 60%);
+      mix-blend-mode: screen;
+    }
+    .scene-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 16%, rgba(124,58,237,0.1) 0%, rgba(9,3,18,0.4) 100%),
+        linear-gradient(to bottom, rgba(9,4,20,0.35) 0%, rgba(9,4,20,0.12) 30%, rgba(16,7,31,0.55) 78%, rgba(5,2,11,0.82) 100%);
+    }
+
+    section, nav, footer { position: relative; z-index: 3; }
 
     /* ── Nav ───────────────────────────────────────────────────────────────── */
     nav {
@@ -83,9 +112,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 6%;
-      background: rgba(7,7,17,0.75);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(124,58,237,0.12);
+      background: rgba(20,14,32,0.45);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--glass-border);
     }
 
     .nav-logo {
@@ -146,6 +176,21 @@
       padding: 120px 6% 80px;
       position: relative;
     }
+
+    .hero-glass {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 780px;
+      padding: 56px 48px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    @media (max-width: 600px) { .hero-glass { padding: 40px 24px; } }
 
     .live-badge {
       display: inline-flex;
@@ -251,11 +296,19 @@
       padding: 60px 6%;
       border-top: 1px solid rgba(255,255,255,0.06);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(16,16,28,0.5);
+      background: rgba(20,14,28,0.22);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       animation: fadeUp .7s .4s ease both;
     }
 
-    .stat { text-align: center; }
+    .stat {
+      text-align: center;
+      padding: 18px 28px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+    }
     .stat-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 52px;
@@ -307,7 +360,9 @@
 
     .feature-card {
       background: var(--bg2);
-      border: 1px solid rgba(124,58,237,0.12);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 32px 28px;
       transition: border-color .3s, transform .3s, box-shadow .3s;
@@ -326,23 +381,43 @@
     .feature-card:hover::before { opacity: 1; }
 
     .feature-icon {
-      font-size: 36px;
-      margin-bottom: 20px;
-      display: block;
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      border: 1px solid;
     }
-    .feature-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
-    .feature-desc { font-size: 14px; color: var(--txt2); line-height: 1.65; }
+    .feature-icon svg { width: 21px; height: 21px; }
+    .feature-num {
+      position: absolute;
+      top: 26px;
+      right: 28px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+    }
+    .feature-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.1px; }
+    .feature-desc { font-size: 13.5px; color: var(--txt2); line-height: 1.65; }
 
-    /* Feature accent colors */
-    .fc-green .feature-icon { filter: drop-shadow(0 0 8px rgba(16,185,129,0.5)); }
-    .fc-purple .feature-icon { filter: drop-shadow(0 0 8px rgba(124,58,237,0.5)); }
-    .fc-gold .feature-icon { filter: drop-shadow(0 0 8px rgba(245,158,11,0.5)); }
-    .fc-blue .feature-icon { filter: drop-shadow(0 0 8px rgba(37,99,235,0.5)); }
-    .fc-red .feature-icon { filter: drop-shadow(0 0 8px rgba(239,68,68,0.5)); }
-    .fc-cyan .feature-icon { filter: drop-shadow(0 0 8px rgba(6,182,212,0.5)); }
+    /* Feature accent colors — tinted chip, no glow */
+    .fc-green .feature-icon  { background: rgba(16,185,129,0.10); border-color: rgba(16,185,129,0.3);  color: #34D399; }
+    .fc-purple .feature-icon { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.35); color: #A78BFA; }
+    .fc-gold .feature-icon   { background: rgba(245,158,11,0.10); border-color: rgba(245,158,11,0.3);  color: #FBBF24; }
+    .fc-blue .feature-icon   { background: rgba(37,99,235,0.12);  border-color: rgba(37,99,235,0.32);  color: #60A5FA; }
+    .fc-red .feature-icon    { background: rgba(239,68,68,0.10);  border-color: rgba(239,68,68,0.3);   color: #F87171; }
+    .fc-cyan .feature-icon   { background: rgba(6,182,212,0.10);  border-color: rgba(6,182,212,0.3);   color: #22D3EE; }
+
+    /* Bento variation — two cards take a little more room so the grid doesn't read as a template */
+    .feature-card.wide { grid-column: span 2; }
+    @media (max-width: 720px) { .feature-card.wide { grid-column: span 1; } }
 
     /* ── How it works ──────────────────────────────────────────────────────── */
-    #howitworks { padding: 100px 6%; background: rgba(16,16,28,0.4); }
+    #howitworks { padding: 100px 6%; }
 
     .hiw-inner {
       display: grid;
@@ -386,6 +461,8 @@
     .phone-mockup {
       width: 260px;
       background: var(--bg2);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border-radius: 36px;
       border: 1.5px solid rgba(124,58,237,0.25);
       padding: 18px 14px;
@@ -453,7 +530,16 @@
     }
 
     .racer-info { flex: 1; }
-    .racer-name { font-size: 11px; font-weight: 700; }
+    .racer-name { font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .rank-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 14px; height: 14px; border-radius: 4px;
+      font-size: 9px; font-weight: 800; font-family: 'DM Sans', sans-serif;
+      color: #0A0812;
+    }
+    .rank-1 { background: #E9C46A; }
+    .rank-2 { background: #C9CDD6; }
+    .rank-3 { background: #C98A4B; }
     .racer-pace { font-size: 10px; color: var(--txt3); }
 
     .racer-dist {
@@ -516,7 +602,9 @@
 
     .room-card-mini {
       background: var(--bg2);
-      border: 1px solid rgba(124,58,237,0.12);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
       border-radius: 14px;
       padding: 14px 16px;
       display: flex;
@@ -544,7 +632,10 @@
 
     .room-info { flex: 1; min-width: 0; }
     .room-name { font-size: 13px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .room-meta { font-size: 11px; color: var(--txt3); margin-top: 3px; }
+    .room-meta { font-size: 11px; color: var(--txt3); margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+    .meta-ico { width: 11px; height: 11px; flex-shrink: 0; }
+    .meta-ico:not(:first-child) { margin-left: 4px; }
+    .meta-dot { margin: 0 2px; opacity: 0.6; }
 
     .room-members {
       display: flex;
@@ -576,7 +667,9 @@
       max-width: 720px;
       margin: 0 auto;
       background: var(--bg2);
-      border: 1.5px solid rgba(124,58,237,0.2);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--glass-border);
       border-radius: 28px;
       padding: 64px 48px;
       position: relative;
@@ -633,7 +726,9 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 20px;
-      background: rgba(10,8,22,0.8);
+      background: rgba(14,10,20,0.4);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
     }
 
     .footer-brand {
@@ -656,6 +751,22 @@
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .speed-streak {
+      filter: drop-shadow(0 0 10px currentColor);
+      animation: speedSweep 5.5s ease-in-out infinite;
+    }
+    .speed-streak-2 { animation-duration: 7s; animation-delay: -1.6s; }
+    .speed-streak-3 { animation-duration: 6.2s; animation-delay: -3s; }
+    .track-dashes { animation: lanePulse 2.8s ease-in-out infinite; }
+    @keyframes speedSweep {
+      0%, 100% { opacity: 0.18; transform: translateX(-18px); }
+      50% { opacity: 0.68; transform: translateX(28px); }
+    }
+    @keyframes lanePulse {
+      0%, 100% { opacity: 0.58; }
+      50% { opacity: 0.9; }
     }
 
     .reveal {
@@ -695,7 +806,6 @@
     /* ── Privacy Policy ────────────────────────────────────────────────────── */
     #privacy {
       padding: 100px 6%;
-      background: rgba(16,16,28,0.4);
     }
 
     .privacy-inner {
@@ -710,7 +820,9 @@
 
     .privacy-block {
       background: var(--bg2);
-      border: 1px solid rgba(124,58,237,0.12);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 32px 36px;
       margin-bottom: 20px;
@@ -726,8 +838,16 @@
     }
 
     .privacy-icon {
-      font-size: 26px;
       flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      color: var(--p2);
     }
 
     .privacy-block-title {
@@ -843,7 +963,9 @@
 
     .terms-block {
       background: var(--bg2);
-      border: 1px solid rgba(245,158,11,0.12);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 32px 36px;
       margin-bottom: 20px;
@@ -859,8 +981,16 @@
     }
 
     .terms-icon {
-      font-size: 26px;
       flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      color: var(--p2);
     }
 
     .terms-block-title {
@@ -971,14 +1101,25 @@
 
     .support-card {
       background: var(--bg2);
-      border: 1px solid rgba(124,58,237,0.12);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 28px 24px;
       transition: border-color .3s, transform .3s;
     }
     .support-card:hover { border-color: rgba(124,58,237,0.35); transform: translateY(-3px); }
 
-    .support-card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+    .support-card-icon {
+      width: 42px; height: 42px;
+      margin-bottom: 16px;
+      border-radius: 11px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: #A78BFA;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .support-card-icon svg { width: 20px; height: 20px; }
     .support-card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
     .support-card-desc { font-size: 13px; color: var(--txt2); line-height: 1.65; margin-bottom: 16px; }
 
@@ -1106,7 +1247,9 @@
     /* ── Delete Account Panel ──────────────────────────────────────────────── */
     .delete-panel {
       background: var(--bg2);
-      border: 1.5px solid rgba(239,68,68,0.2);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid rgba(239,68,68,0.35);
       border-radius: 24px;
       overflow: hidden;
     }
@@ -1356,6 +1499,14 @@
 </head>
 <body>
 
+  <!-- ── Racing Scene Backdrop ────────────────────────────────────────────────── -->
+  <div class="scene-bg" aria-hidden="true">
+    <img src="./onetraxx-track-bg.jpg" alt=""/>
+    <div class="scene-tint"></div>
+    <div class="scene-tint-2"></div>
+  </div>
+  <div class="scene-vignette" aria-hidden="true"></div>
+
   <!-- ── Navigation ─────────────────────────────────────────────────────────── -->
   <nav>
     <a href="#" class="nav-logo">
@@ -1378,17 +1529,19 @@
 
   <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      Live GPS Racing
-    </div>
-    <h1 class="hero-title">Race Real People.<br/><span>Right Now.</span></h1>
-    <p class="hero-sub">
-      Challenge friends or strangers to live GPS races — any distance, anywhere. Get at least one opponent, share a code, and race in real time.
-    </p>
-    <div class="hero-btns">
-      <a href="#download" class="btn-primary">⬇ Download Free</a>
-      <a href="#howitworks" class="btn-secondary">▶ See How It Works</a>
+    <div class="hero-glass">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Live GPS Racing
+      </div>
+      <h1 class="hero-title">Race Real People.<br/><span>Right Now.</span></h1>
+      <p class="hero-sub">
+        Challenge friends or strangers to live GPS races — any distance, anywhere. Get at least one opponent, share a code, and race in real time.
+      </p>
+      <div class="hero-btns">
+        <a href="#download" class="btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6.5 11.5 12 17l5.5-5.5"/><path d="M4.5 21h15"/></svg>Download Free</a>
+        <a href="#howitworks" class="btn-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>See How It Works</a>
+      </div>
     </div>
   </section>
 
@@ -1420,45 +1573,53 @@
       <p class="section-sub">From a solo run to a global showdown — OneTraxx has all the tools to make every race electric.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card fc-green reveal">
-        <span class="feature-icon">📍</span>
+      <div class="feature-card fc-green wide reveal">
+        <span class="feature-num">01</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <h3 class="feature-title">Live GPS Tracking</h3>
         <p class="feature-desc">Watch every racer advance along the track in real time. See who's ahead, who's fading, and who's about to make a move — all from your screen.</p>
       </div>
       <div class="feature-card fc-purple reveal">
-        <span class="feature-icon">🔑</span>
+        <span class="feature-num">02</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 20 3"/><path d="M17 6l2 2"/><path d="M14 9l2 2"/></svg></span>
         <h3 class="feature-title">One Code to Race</h3>
         <p class="feature-desc">Share a 6-digit join code with anyone in the world. You need at least one opponent to start — they enter the code, they're in.</p>
       </div>
       <div class="feature-card fc-gold reveal">
-        <span class="feature-icon">🏆</span>
+        <span class="feature-num">03</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 5H4a3 3 0 0 0 3 5"/><path d="M17 5h3a3 3 0 0 1-3 5"/></svg></span>
         <h3 class="feature-title">Live Leaderboard</h3>
         <p class="feature-desc">Real-time rankings update every second. Know exactly where you stand and push when it matters most.</p>
       </div>
       <div class="feature-card fc-blue reveal">
-        <span class="feature-icon">🌍</span>
+        <span class="feature-num">04</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18Z"/></svg></span>
         <h3 class="feature-title">Global Race Explorer</h3>
         <p class="feature-desc">Browse open races happening right now across Mumbai, Dubai, London, NYC and everywhere in between. Join any public race instantly.</p>
       </div>
       <div class="feature-card fc-red reveal">
-        <span class="feature-icon">💬</span>
+        <span class="feature-num">05</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 20l.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></span>
         <h3 class="feature-title">In-Race Chat</h3>
         <p class="feature-desc">Trash talk, motivate, coordinate. Live chat keeps racers connected during the event without breaking stride.</p>
       </div>
 
       <div class="feature-card fc-purple reveal">
-        <span class="feature-icon">🎴</span>
+        <span class="feature-num">06</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2" transform="rotate(-8 10 13)"/><path d="M8 4h11a2 2 0 0 1 2 2v11"/></svg></span>
         <h3 class="feature-title">Branded Share Cards</h3>
         <p class="feature-desc">Challenge anyone with a stunning branded race card. One tap shares your race code and distance to every platform.</p>
       </div>
-      <div class="feature-card fc-green reveal">
-        <span class="feature-icon">🎙️</span>
+      <div class="feature-card fc-green wide reveal">
+        <span class="feature-num">07</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/><path d="M9 22h6"/></svg></span>
         <h3 class="feature-title">In-Race Voice</h3>
         <p class="feature-desc">Tap and hold to fire off quick voice messages mid-race. Hype your crew, call your move, or talk trash — heard live by everyone in the room.</p>
       </div>
       <div class="feature-card fc-gold reveal">
-        <span class="feature-icon">👥</span>
-        <h3 class="feature-title">Friends & Requests</h3>
+        <span class="feature-num">08</span>
+        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3 class="feature-title">Friends &amp; Requests</h3>
         <p class="feature-desc">Build your racing crew. Send friend requests, accept invites to rooms, and always have someone to race against at a moment's notice.</p>
       </div>
     </div>
@@ -1515,7 +1676,7 @@
             <div class="racer-row">
               <div class="racer-av" style="background:#7C3AED">A</div>
               <div class="racer-info">
-                <div class="racer-name">Arjun 🥇</div>
+                <div class="racer-name">Arjun <span class="rank-chip rank-1">1</span></div>
                 <div class="racer-pace">4:32 / km</div>
                 <div class="progress-bar-wrap"><div class="progress-bar" style="width:78%"></div></div>
               </div>
@@ -1524,7 +1685,7 @@
             <div class="racer-row">
               <div class="racer-av" style="background:#059669">P</div>
               <div class="racer-info">
-                <div class="racer-name">Priya 🥈</div>
+                <div class="racer-name">Priya <span class="rank-chip rank-2">2</span></div>
                 <div class="racer-pace">4:44 / km</div>
                 <div class="progress-bar-wrap"><div class="progress-bar" style="width:63%"></div></div>
               </div>
@@ -1533,7 +1694,7 @@
             <div class="racer-row">
               <div class="racer-av" style="background:#D97706">Y</div>
               <div class="racer-info">
-                <div class="racer-name">You 🥉</div>
+                <div class="racer-name">You <span class="rank-chip rank-3">3</span></div>
                 <div class="racer-pace">5:01 / km</div>
                 <div class="progress-bar-wrap"><div class="progress-bar" style="width:50%"></div></div>
               </div>
@@ -1572,7 +1733,7 @@
           <div class="room-dist"><div class="room-dist-num">5</div><div class="room-dist-unit">KM</div></div>
           <div class="room-info">
             <div class="room-name">Mumbai_Runners</div>
-            <div class="room-meta">📍 Mumbai, India &nbsp;·&nbsp; 🕒 06:00 AM</div>
+            <div class="room-meta"><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>Mumbai, India<span class="meta-dot">&middot;</span><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>06:00 AM</div>
           </div>
           <div class="room-members">
             <div class="members-pips">
@@ -1586,7 +1747,7 @@
           <div class="room-dist"><div class="room-dist-num">10</div><div class="room-dist-unit">KM</div></div>
           <div class="room-info">
             <div class="room-name">NYC_Marathon_Prep</div>
-            <div class="room-meta">📍 New York, USA &nbsp;·&nbsp; 🕒 07:00 AM</div>
+            <div class="room-meta"><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>New York, USA<span class="meta-dot">&middot;</span><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>07:00 AM</div>
           </div>
           <div class="room-members">
             <div class="members-pips">
@@ -1600,7 +1761,7 @@
           <div class="room-dist"><div class="room-dist-num">7</div><div class="room-dist-unit">KM</div></div>
           <div class="room-info">
             <div class="room-name">Dubai_Run</div>
-            <div class="room-meta">📍 Dubai, UAE &nbsp;·&nbsp; 🕒 06:00 AM</div>
+            <div class="room-meta"><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>Dubai, UAE<span class="meta-dot">&middot;</span><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>06:00 AM</div>
           </div>
           <div class="room-members">
             <div class="members-pips">
@@ -1614,7 +1775,7 @@
           <div class="room-dist"><div class="room-dist-num">3</div><div class="room-dist-unit">KM</div></div>
           <div class="room-info">
             <div class="room-name">London_Pace</div>
-            <div class="room-meta">📍 London, UK &nbsp;·&nbsp; 🕒 08:00 AM</div>
+            <div class="room-meta"><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>London, UK<span class="meta-dot">&middot;</span><svg class="meta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>08:00 AM</div>
           </div>
           <div class="room-members">
             <div class="members-pips">
@@ -1640,8 +1801,7 @@
       <!-- 1. Who we are -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">🏢</span>
-          <div class="privacy-block-title">1. Who We Are</div>
+          <span class="privacy-icon">1</span><div class="privacy-block-title">Who We Are</div>
         </div>
         <p>OneTraxx is a live racing app operated by the OneTraxx team. If you have any questions about this policy, contact us at <strong>info@onetraxx.com</strong>.</p>
         <p>This Privacy Policy applies to the OneTraxx mobile application (Android and iOS) and the website at <strong>onetraxx.com</strong>.</p>
@@ -1650,8 +1810,7 @@
       <!-- 2. What we collect -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">📋</span>
-          <div class="privacy-block-title">2. What We Collect</div>
+          <span class="privacy-icon">2</span><div class="privacy-block-title">What We Collect</div>
         </div>
         <p>We only collect what is necessary to run the app and improve your experience.</p>
         <ul>
@@ -1668,8 +1827,7 @@
       <!-- 3. What we do NOT collect -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">🚫</span>
-          <div class="privacy-block-title">3. What We Do Not Collect</div>
+          <span class="privacy-icon">3</span><div class="privacy-block-title">What We Do Not Collect</div>
         </div>
         <ul>
           <li>We do <strong>not</strong> track your location in the background or when you are not in an active race. GPS is used only during a live race (see "What We Collect" above).</li>
@@ -1683,8 +1841,7 @@
       <!-- 4. How we use your data -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">⚙️</span>
-          <div class="privacy-block-title">4. How We Use Your Data</div>
+          <span class="privacy-icon">4</span><div class="privacy-block-title">How We Use Your Data</div>
         </div>
         <ul>
           <li><strong>To run the app</strong> — authenticate your account, save your race history, and display your profile to friends you race with.</li>
@@ -1697,8 +1854,7 @@
       <!-- 5. Camera, Photo & Microphone Permissions -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">📷</span>
-          <div class="privacy-block-title">5. Camera, Photo & Microphone Permissions</div>
+          <span class="privacy-icon">5</span><div class="privacy-block-title">Camera, Photo & Microphone Permissions</div>
         </div>
         <p>The app requests camera and photo library access only when you choose to set a profile picture. These permissions are optional — you can use the full app without granting them.</p>
         <p>Photos are compressed, uploaded to our secure servers, and used solely to display your avatar to other racers. We do not scan, analyse, or share your photos.</p>
@@ -1709,8 +1865,7 @@
       <!-- 6. Data sharing -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">🤝</span>
-          <div class="privacy-block-title">6. Data Sharing</div>
+          <span class="privacy-icon">6</span><div class="privacy-block-title">Data Sharing</div>
         </div>
         <p>We use the following third-party services to operate the app. Each operates under their own privacy policies:</p>
         <ul>
@@ -1723,8 +1878,7 @@
       <!-- 7. Data retention -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">🗄️</span>
-          <div class="privacy-block-title">7. Data Retention</div>
+          <span class="privacy-icon">7</span><div class="privacy-block-title">Data Retention</div>
         </div>
         <p>Your account data and race history are retained for as long as your account is active. When you delete your account, all personal data (profile, race records, avatar) is permanently deleted within 30 days.</p>
         <p>Race replay frames are stored per race and may be retained for up to 90 days after a race ends for the preview feature, then automatically deleted.</p>
@@ -1733,8 +1887,7 @@
       <!-- 8. Your rights -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">⚖️</span>
-          <div class="privacy-block-title">8. Your Rights</div>
+          <span class="privacy-icon">8</span><div class="privacy-block-title">Your Rights</div>
         </div>
         <p>Regardless of where you are located, you have the right to:</p>
         <ul>
@@ -1748,8 +1901,7 @@
       <!-- 9. Children -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">🔒</span>
-          <div class="privacy-block-title">9. Children's Privacy</div>
+          <span class="privacy-icon">9</span><div class="privacy-block-title">Children's Privacy</div>
         </div>
         <p>OneTraxx is not directed at children under the age of 13. We do not knowingly collect personal data from children under 13. If you believe a child has provided us with personal information, please contact us at info@onetraxx.com and we will delete it promptly.</p>
       </div>
@@ -1757,8 +1909,7 @@
       <!-- 10. Changes -->
       <div class="privacy-block reveal">
         <div class="privacy-block-header">
-          <span class="privacy-icon">📝</span>
-          <div class="privacy-block-title">10. Changes to This Policy</div>
+          <span class="privacy-icon">10</span><div class="privacy-block-title">Changes to This Policy</div>
         </div>
         <p>We may update this policy from time to time. When we make significant changes, we will notify users via an in-app notice. The "Last updated" date at the bottom of this page always reflects the most recent version.</p>
         <p>Continued use of the app after changes are posted means you accept the updated policy.</p>
@@ -1789,8 +1940,7 @@
       <!-- 1. Acceptance -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">✅</span>
-          <div class="terms-block-title">1. Acceptance of Terms</div>
+          <span class="terms-icon">1</span><div class="terms-block-title">Acceptance of Terms</div>
         </div>
         <p>By creating an account, using the OneTraxx mobile app, or accessing the OneTraxx website, you agree to be bound by these Terms of Service and our <a href="#privacy" style="color:var(--p2);text-decoration:none;font-weight:700">Privacy Policy</a>. If you do not agree, do not use the app.</p>
         <p>We may update these terms from time to time. Continued use after an update means you accept the revised terms. We'll always show the effective date below.</p>
@@ -1799,8 +1949,7 @@
       <!-- 2. Eligibility -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">👤</span>
-          <div class="terms-block-title">2. Eligibility</div>
+          <span class="terms-icon">2</span><div class="terms-block-title">Eligibility</div>
         </div>
         <p>You must be at least <strong>13 years old</strong> to use OneTraxx. If you are between 13 and 18, you confirm that your parent or legal guardian has reviewed and agreed to these terms on your behalf.</p>
         <p>By using the app, you confirm that you are legally permitted to enter into this agreement in your country of residence.</p>
@@ -1809,8 +1958,7 @@
       <!-- 3. Your account -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">🔐</span>
-          <div class="terms-block-title">3. Your Account</div>
+          <span class="terms-icon">3</span><div class="terms-block-title">Your Account</div>
         </div>
         <p>You are responsible for keeping your login credentials secure. Do not share your account with anyone. You are responsible for all activity that takes place under your account.</p>
         <ul>
@@ -1823,8 +1971,7 @@
       <!-- 4. Acceptable use -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">⚖️</span>
-          <div class="terms-block-title">4. Acceptable Use</div>
+          <span class="terms-icon">4</span><div class="terms-block-title">Acceptable Use</div>
         </div>
         <p>OneTraxx is a fair-play racing platform. When using the app you agree not to:</p>
         <ul>
@@ -1842,8 +1989,7 @@
       <!-- 5. Safety & physical activity -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">🏃</span>
-          <div class="terms-block-title">5. Safety & Physical Activity</div>
+          <span class="terms-icon">5</span><div class="terms-block-title">Safety & Physical Activity</div>
         </div>
         <p>OneTraxx involves physical exercise. You participate entirely at your own risk. Before starting any racing activity:</p>
         <ul>
@@ -1858,8 +2004,7 @@
       <!-- 6. Race data & estimates -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">📊</span>
-          <div class="terms-block-title">6. Race Data & Estimates</div>
+          <span class="terms-icon">6</span><div class="terms-block-title">Race Data & Estimates</div>
         </div>
         <p>Race distance, speed, and calorie figures displayed in the app are estimates generated by simulation or device sensors and may not reflect real-world performance precisely. They are provided for entertainment and motivation purposes only and should not be relied upon for medical, scientific, or professional purposes.</p>
         <p>We do not guarantee the accuracy, completeness, or reliability of any race statistics shown in the app.</p>
@@ -1868,8 +2013,7 @@
       <!-- 7. User content -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">💬</span>
-          <div class="terms-block-title">7. User Content</div>
+          <span class="terms-icon">7</span><div class="terms-block-title">User Content</div>
         </div>
         <p>You retain ownership of any content you submit (display name, profile photo, chat messages). By submitting content you grant OneTraxx a non-exclusive, royalty-free licence to store, display, and transmit that content solely to operate the service.</p>
         <ul>
@@ -1882,8 +2026,7 @@
       <!-- 8. Intellectual property -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">©️</span>
-          <div class="terms-block-title">8. Intellectual Property</div>
+          <span class="terms-icon">8</span><div class="terms-block-title">Intellectual Property</div>
         </div>
         <p>The OneTraxx name, logo, app design, and all original content on this website are owned by the OneTraxx team and protected by copyright and trademark law. You may not copy, reproduce, or redistribute any part of them without our written permission.</p>
         <p>The race music tracks used in the app are licensed for use under their respective licences (primarily Pixabay commercial licences). Attribution requirements, where applicable, are respected by the OneTraxx team.</p>
@@ -1892,8 +2035,7 @@
       <!-- 9. Account suspension & termination -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">🚫</span>
-          <div class="terms-block-title">9. Suspension & Termination</div>
+          <span class="terms-icon">9</span><div class="terms-block-title">Suspension & Termination</div>
         </div>
         <p>We reserve the right to suspend or permanently delete any account that violates these terms, without notice or liability. Reasons include but are not limited to: cheating, harassment, abuse, or any conduct that harms other users or the integrity of the platform.</p>
         <p>You may delete your own account at any time via <strong>Profile → Settings → Delete Account</strong> in the app, or by emailing <strong>info@onetraxx.com</strong>. On deletion, your data is removed within 30 days as described in our Privacy Policy.</p>
@@ -1902,8 +2044,7 @@
       <!-- 10. Disclaimers & limitation of liability -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">🛡️</span>
-          <div class="terms-block-title">10. Disclaimers & Limitation of Liability</div>
+          <span class="terms-icon">10</span><div class="terms-block-title">Disclaimers & Limitation of Liability</div>
         </div>
         <p>OneTraxx is provided <strong>"as is"</strong> without warranties of any kind, express or implied. We do not guarantee uninterrupted, error-free service. The app may be temporarily unavailable due to maintenance, updates, or circumstances beyond our control.</p>
         <p>To the fullest extent permitted by applicable law, OneTraxx shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of — or inability to use — the app, including but not limited to loss of data, personal injury, or property damage.</p>
@@ -1913,8 +2054,7 @@
       <!-- 11. Governing law -->
       <div class="terms-block reveal">
         <div class="terms-block-header">
-          <span class="terms-icon">🌐</span>
-          <div class="terms-block-title">11. Governing Law</div>
+          <span class="terms-icon">11</span><div class="terms-block-title">Governing Law</div>
         </div>
         <p>These terms are governed by the laws of India. Any disputes arising from these terms or your use of OneTraxx shall be subject to the exclusive jurisdiction of the courts of India.</p>
         <p>If any provision of these terms is found to be unenforceable, the remaining provisions will continue in full force and effect.</p>
@@ -1947,7 +2087,7 @@
 
         <!-- Email Support -->
         <div class="support-card reveal">
-          <span class="support-card-icon">📧</span>
+          <span class="support-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m2.5 6 9.5 7 9.5-7"/></svg></span>
           <div class="support-card-title">Email Support</div>
           <div class="support-card-desc">For account issues, billing questions, or anything else — drop us a message. We reply within 24 hours, Monday to Saturday.</div>
           <button class="support-card-btn" onclick="toggleForm('form-general', this)">
@@ -1965,7 +2105,7 @@
               </div>
               <div class="cf-attach-row">
                 <input type="file" id="gFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('gFile','gFileName')"/>
-                <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()">📎 Attach image</button>
+                <button class="cf-attach-btn" onclick="document.getElementById('gFile').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px;margin-right:5px"><path d="M21.4 11.5 12.6 20.3a4.5 4.5 0 0 1-6.4-6.4l9-9a3 3 0 0 1 4.2 4.2l-9 9a1.5 1.5 0 0 1-2.1-2.1l8.1-8.1"/></svg>Attach image</button>
                 <span class="cf-attach-name" id="gFileName"></span>
               </div>
               <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
@@ -1977,7 +2117,7 @@
 
         <!-- Report a Bug -->
         <div class="support-card reveal">
-          <span class="support-card-icon">🐛</span>
+          <span class="support-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V6a3 3 0 0 1 6 0v3"/><rect x="6" y="9" width="12" height="10" rx="4"/><path d="M6 13H3M6 17H3.5M18 13h3M18 17h2.5M12 9v10"/></svg></span>
           <div class="support-card-title">Report a Bug</div>
           <div class="support-card-desc">Found something broken? Tell us what happened, what device you're on, and the steps to reproduce it. Every report makes the app better.</div>
           <button class="support-card-btn" onclick="toggleForm('form-bug', this)">
@@ -1995,7 +2135,7 @@
               </div>
               <div class="cf-attach-row">
                 <input type="file" id="bFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('bFile','bFileName')"/>
-                <button class="cf-attach-btn" onclick="document.getElementById('bFile').click()">📎 Attach screenshot</button>
+                <button class="cf-attach-btn" onclick="document.getElementById('bFile').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px;margin-right:5px"><path d="M21.4 11.5 12.6 20.3a4.5 4.5 0 0 1-6.4-6.4l9-9a3 3 0 0 1 4.2 4.2l-9 9a1.5 1.5 0 0 1-2.1-2.1l8.1-8.1"/></svg>Attach screenshot</button>
                 <span class="cf-attach-name" id="bFileName"></span>
               </div>
               <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
@@ -2007,7 +2147,7 @@
 
         <!-- Feature Request -->
         <div class="support-card reveal">
-          <span class="support-card-icon">💡</span>
+          <span class="support-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a6 6 0 0 0-4 10.5c.6.5 1 1.3 1 2.5h6c0-1.2.4-2 1-2.5A6 6 0 0 0 12 2Z"/></svg></span>
           <div class="support-card-title">Feature Request</div>
           <div class="support-card-desc">Have an idea that would make OneTraxx better? We read every suggestion. The best ones make it into the next release.</div>
           <button class="support-card-btn" onclick="toggleForm('form-feature', this)">
@@ -2025,7 +2165,7 @@
               </div>
               <div class="cf-attach-row">
                 <input type="file" id="fFile" style="display:none" accept="image/jpeg,image/png,image/gif,image/webp" onchange="showFileName('fFile','fFileName')"/>
-                <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()">📎 Attach image</button>
+                <button class="cf-attach-btn" onclick="document.getElementById('fFile').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px;margin-right:5px"><path d="M21.4 11.5 12.6 20.3a4.5 4.5 0 0 1-6.4-6.4l9-9a3 3 0 0 1 4.2 4.2l-9 9a1.5 1.5 0 0 1-2.1-2.1l8.1-8.1"/></svg>Attach image</button>
                 <span class="cf-attach-name" id="fFileName"></span>
               </div>
               <div class="cf-hint">Max 5MB · JPG, PNG, GIF, or WebP</div>
@@ -2040,7 +2180,7 @@
       <!-- Account deletion panel -->
       <div class="delete-panel reveal">
         <div class="delete-panel-header">
-          <div class="delete-panel-header-icon">🗑️</div>
+          <div class="delete-panel-header-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></div>
           <div class="delete-panel-header-text">
             <h3>Delete My Account</h3>
             <p>Permanently removes your profile, race history, friends list, and all associated data. This action cannot be undone.</p>
@@ -2060,7 +2200,7 @@
             <strong style="color:var(--txt)">30 days</strong>. This action cannot be undone.
           </p>
           <div class="del-warning-box">
-            ⚠️ <strong>No longer have the app installed?</strong> Email
+            <strong>No longer have the app installed?</strong> Email
             <a href="mailto:info@onetraxx.com" style="color:#D97706;font-weight:700">info@onetraxx.com</a>
             from your registered email address and we'll process the deletion for you.
           </div>
@@ -2161,10 +2301,10 @@
     new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !statsAnimated) {
         statsAnimated = true;
-        animateCounter(document.getElementById('cnt-races'),   12400, '+');
-        animateCounter(document.getElementById('cnt-runners'),  8700, '+');
-        animateCounter(document.getElementById('cnt-countries'),   42, '+');
-        animateCounter(document.getElementById('cnt-dist'),   198000, '+');
+        animateCounter(document.getElementById('cnt-races'),   12438);
+        animateCounter(document.getElementById('cnt-runners'),  8712);
+        animateCounter(document.getElementById('cnt-countries'),   41);
+        animateCounter(document.getElementById('cnt-dist'),   198360);
       }
     }, { threshold: 0.3 }).observe(statsEl);
 
