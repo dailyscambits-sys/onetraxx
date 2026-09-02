@@ -1178,7 +1178,7 @@
     .hero-phone img { width: 100%; height: auto; display: block; border-radius: 32px; }
     @media (max-width: 700px) { .hero-phone { width: 220px; } }
 
-    #screens { padding: 100px 6% 80px; }
+    #screens { padding: 40px 6% 70px; }
     .screens-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
     .screens-row {
       display: flex; gap: 28px; justify-content: center;
@@ -1655,7 +1655,6 @@
 
   <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-wrap">
     <div class="hero-glass">
       <div class="live-badge">
         <span class="live-dot"></span>
@@ -1670,9 +1669,36 @@
         <a href="#howitworks" class="btn-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>See How It Works</a>
       </div>
     </div>
-    <div class="hero-phone reveal">
-      <img src="img/shot-race.jpg" width="420" height="840" alt="OneTraxx live race screen: three racers on the track, leaderboard on top, finish line ahead" loading="eager"/>
-    </div>
+  </section>
+
+  <!-- ── Screens ─────────────────────────────────────────────────────────────── -->
+  <section id="screens">
+    <div class="screens-inner">
+      <div class="section-label reveal">See It in Action</div>
+      <h2 class="section-title reveal">From Lobby to Podium</h2>
+      <p class="section-sub reveal" style="margin:0 auto">Real screens from real races. One code in, and the track is live.</p>
+      <div class="screens-row">
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/shot-lobby.jpg" width="420" height="840" alt="Waiting room with a six-digit room code and the racers list" loading="lazy"/></div>
+          <div class="screen-cap">Share one code</div>
+          <div class="screen-sub">Friends join in seconds. Host starts when everyone's in.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/shot-race.jpg" width="420" height="840" alt="Live race screen with three racers advancing along the track" loading="lazy"/></div>
+          <div class="screen-cap">Race live on the track</div>
+          <div class="screen-sub">Every racer moves as they move. Positions update every second.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/shot-results.jpg" width="420" height="840" alt="Race results screen with a winner banner and final standings" loading="lazy"/></div>
+          <div class="screen-cap">Cross the line, get the card</div>
+          <div class="screen-sub">Podium, time, pace and a share card the moment you finish.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/shot-profile.jpg" width="420" height="840" alt="Profile screen with monthly steps, calories, streak and personal records" loading="lazy"/></div>
+          <div class="screen-cap">Watch your records grow</div>
+          <div class="screen-sub">Streaks, monthly stats and personal bests, all from races you actually ran.</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1763,36 +1789,6 @@
     </div>
   </section>
 
-  <!-- ── Screens ─────────────────────────────────────────────────────────────── -->
-  <section id="screens">
-    <div class="screens-inner">
-      <div class="section-label reveal">See It in Action</div>
-      <h2 class="section-title reveal">From Lobby to Podium</h2>
-      <p class="section-sub reveal" style="margin:0 auto">Real screens from real races. One code in, and the track is live.</p>
-      <div class="screens-row">
-        <div class="screen-card reveal">
-          <div class="screen-frame"><img src="img/shot-lobby.jpg" width="420" height="840" alt="Waiting room with a six-digit room code and the racers list" loading="lazy"/></div>
-          <div class="screen-cap">Share one code</div>
-          <div class="screen-sub">Friends join in seconds. Host starts when everyone's in.</div>
-        </div>
-        <div class="screen-card reveal">
-          <div class="screen-frame"><img src="img/shot-race.jpg" width="420" height="840" alt="Live race screen with three racers advancing along the track" loading="lazy"/></div>
-          <div class="screen-cap">Race live on the track</div>
-          <div class="screen-sub">Every racer moves as they move. Positions update every second.</div>
-        </div>
-        <div class="screen-card reveal">
-          <div class="screen-frame"><img src="img/shot-results.jpg" width="420" height="840" alt="Race results screen with a winner banner and final standings" loading="lazy"/></div>
-          <div class="screen-cap">Cross the line, get the card</div>
-          <div class="screen-sub">Podium, time, pace and a share card the moment you finish.</div>
-        </div>
-        <div class="screen-card reveal">
-          <div class="screen-frame"><img src="img/shot-profile.jpg" width="420" height="840" alt="Profile screen with monthly steps, calories, streak and personal records" loading="lazy"/></div>
-          <div class="screen-cap">Watch your records grow</div>
-          <div class="screen-sub">Streaks, monthly stats and personal bests, all from races you actually ran.</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── How It Works ─────────────────────────────────────────────────────────── -->
   <section id="howitworks">
