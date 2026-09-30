@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You're invited to race on OneTraxx</title>
+<meta name="description" content="A friend invited you to a live GPS race on OneTraxx. Open the app to add them, or install it first.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="You're invited to race on OneTraxx">
+<meta property="og:description" content="Live GPS races with friends, anywhere. Tap to add your friend in the app.">
+<meta property="og:image" content="https://onetraxx.com/img/og-image.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="../img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#07070f; --card:#12131f; --border:#2a2b40; --text:#f8fafc; --muted:#8d95aa; --neon:#a78bfa; --brand:#7c3aed; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--text); font-family:'DM Sans', sans-serif; min-height:100%; }
+  body { display:flex; align-items:center; justify-content:center; padding:24px 16px; min-height:100vh;
+         background:radial-gradient(60% 40% at 50% 0%, rgba(124,58,237,.35), transparent 70%), var(--bg); }
+  .card { width:100%; max-width:420px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px 22px; text-align:center; }
+  .logo { width:72px; height:72px; border-radius:18px; display:block; margin:0 auto 14px; }
+  h1 { font-family:'Bebas Neue', sans-serif; font-size:34px; letter-spacing:.5px; margin:0 0 6px; line-height:1.05; }
+  h1 span { color:var(--neon); }
+  p { color:var(--muted); font-size:15px; line-height:1.5; margin:0 0 18px; }
+  .btn { display:block; width:100%; padding:15px 16px; border-radius:14px; font-weight:800; font-size:16px; text-decoration:none; margin-top:10px; border:1px solid var(--border); }
+  .btn-primary { background:var(--neon); color:#000; border-color:transparent; }
+  .btn-store { background:#1a1b2a; color:var(--text); }
+  .steps { text-align:left; background:#0d0e18; border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin:18px 0 0; }
+  .steps b { color:var(--text); }
+  .steps ol { margin:6px 0 0; padding-left:20px; color:var(--muted); font-size:14px; line-height:1.6; }
+  .fine { font-size:12px; color:var(--muted); margin:16px 0 0; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="../img/icon.png" alt="OneTraxx" width="72" height="72">
+  <h1 id="title">You're invited to <span>race</span></h1>
+  <p id="lead">Live GPS races with friends, anywhere. Open the app to add your friend.</p>
+
+  <a id="open" class="btn btn-primary" href="#">Open in OneTraxx</a>
+  <a id="play" class="btn btn-store" href="https://play.google.com/store/apps/details?id=com.onetraxx.app">Get it on Google Play</a>
+  <a id="appstore" class="btn btn-store" href="https://apps.apple.com/app/id6793381763">Download on the App Store</a>
+
+  <div class="steps">
+    <b>No app yet?</b>
+    <ol>
+      <li>Install OneTraxx from the store button above.</li>
+      <li>Sign up.</li>
+      <li>Come back to this link and tap <b>Open in OneTraxx</b>.</li>
+    </ol>
+  </div>
+  <p class="fine" id="bad" style="display:none">This invite link is incomplete. Ask your friend to share it again.</p>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var code = (q.get('u') || (location.pathname.match(/\/i\/([0-9a-fA-F]{8,32})/) || [])[1] || '').toLowerCase().replace(/[^0-9a-f]/g, '');
+  var name = (q.get('n') || '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+  var PLAY = 'https://play.google.com/store/apps/details?id=com.onetraxx.app';
+  var APPSTORE = 'https://apps.apple.com/app/id6793381763';
+  var open = document.getElementById('open');
+
+  if (name) {
+    document.getElementById('title').innerHTML = '';
+    document.getElementById('title').appendChild(document.createTextNode(name + ' invited you to '));
+    var s = document.createElement('span'); s.textContent = 'race'; document.getElementById('title').appendChild(s);
+    document.getElementById('lead').textContent = 'Live GPS races with friends, anywhere. Open the app to add ' + name + '.';
+  }
+  if (!code) {
+    open.classList.add('hidden');
+    document.getElementById('bad').style.display = 'block';
+  }
+  // Only the other platform's store button is noise on a phone.
+  if (isAndroid) document.getElementById('appstore').classList.add('hidden');
+  if (isIOS) document.getElementById('play').classList.add('hidden');
+
+  var scheme = 'onetraxx://invite/' + code;
+  if (isAndroid) {
+    // Chrome: opens the app when installed, otherwise goes to Play.
+    open.href = 'intent://invite/' + code + '#Intent;scheme=onetraxx;package=com.onetraxx.app;S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end';
+  } else if (isIOS) {
+    // Safari: try the app; if nothing took the page away in 2 s, go to the App Store.
+    open.href = scheme;
+    open.addEventListener('click', function (e) {
+      e.preventDefault();
+      var t0 = Date.now();
+      location.href = scheme;
+      setTimeout(function () {
+        if (!document.hidden && Date.now() - t0 < 2600) location.href = APPSTORE;
+      }, 2000);
+    });
+  } else {
+    // Desktop: the link only makes sense on a phone.
+    open.href = scheme;
+    document.getElementById('lead').textContent = 'Open this link on your phone to add your friend in the OneTraxx app.';
+  }
+})();
+</script>
+</body>
+</html>
