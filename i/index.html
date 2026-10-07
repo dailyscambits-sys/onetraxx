@@ -48,8 +48,8 @@
     <b>No app yet?</b>
     <ol>
       <li>Install OneTraxx from the store button above.</li>
-      <li>Sign up.</li>
-      <li>Come back to this link and tap <b>Open in OneTraxx</b>.</li>
+      <li>Open it and sign in &mdash; your friend appears automatically.</li>
+      <li>Not there? Come back to this link and tap <b>Open in OneTraxx</b>.</li>
     </ol>
   </div>
   <p class="fine" id="bad" style="display:none">This invite link is incomplete. Ask your friend to share it again.</p>
@@ -59,6 +59,9 @@
   var q = new URLSearchParams(location.search);
   var code = (q.get('u') || (location.pathname.match(/\/i\/([0-9a-fA-F]{8,32})/) || [])[1] || '').toLowerCase().replace(/[^0-9a-f]/g, '');
   var name = (q.get('n') || '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+  // R-411: an optional 6-digit waiting-room code rides on the link.
+  var room = (q.get('r') || '').replace(/\D/g, '');
+  if (room.length !== 6) room = '';
   var ua = navigator.userAgent || '';
   var isAndroid = /Android/i.test(ua);
   var isIOS = /iPhone|iPad|iPod/i.test(ua);
@@ -70,7 +73,9 @@
     document.getElementById('title').innerHTML = '';
     document.getElementById('title').appendChild(document.createTextNode(name + ' invited you to '));
     var s = document.createElement('span'); s.textContent = 'race'; document.getElementById('title').appendChild(s);
-    document.getElementById('lead').textContent = 'Live GPS races with friends, anywhere. Open the app to add ' + name + '.';
+    document.getElementById('lead').textContent = room
+      ? 'Live GPS races with friends, anywhere. Open the app to join ' + name + '’s race now.'
+      : 'Live GPS races with friends, anywhere. Open the app to add ' + name + '.';
   }
   if (!code) {
     open.classList.add('hidden');
@@ -80,10 +85,30 @@
   if (isAndroid) document.getElementById('appstore').classList.add('hidden');
   if (isIOS) document.getElementById('play').classList.add('hidden');
 
-  var scheme = 'onetraxx://invite/' + code;
+  // R-411 one-tap invite: record this tap (invite id, room, platform, OS major,
+  // screen in CSS px) so the app can claim it on its first launch after an
+  // install. The server adds the IP it sees; nothing identifying is sent.
+  // Fire-and-forget; keepalive so a store redirect does not cancel it.
+  if (code && (isAndroid || isIOS)) {
+    try {
+      var osm = (ua.match(/Android (\d+)/) || ua.match(/OS (\d+)_/) || [])[1];
+      var scr = (window.screen && screen.width && screen.height)
+        ? Math.min(screen.width, screen.height) + 'x' + Math.max(screen.width, screen.height) : null;
+      var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkc2hpbHdyamdja2RuY2JlenNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NzUxOTAsImV4cCI6MjA5NDQ1MTE5MH0.YK9300WKF_rUm9-ce3LlvjxUy2TsKeViga6-k0JrZFc';
+      fetch('https://api.onetraxx.com/rest/v1/rpc/record_invite_tap', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json', 'apikey': ANON, 'Authorization': 'Bearer ' + ANON },
+        body: JSON.stringify({ p_invite: code, p_room: room || null, p_platform: isAndroid ? 'android' : 'ios',
+                               p_os_major: osm ? parseInt(osm, 10) : null, p_screen: scr })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  var rq = room ? '?r=' + room : '';
+  var scheme = 'onetraxx://invite/' + code + rq;
   if (isAndroid) {
     // Chrome: opens the app when installed, otherwise goes to Play.
-    open.href = 'intent://invite/' + code + '#Intent;scheme=onetraxx;package=com.onetraxx.app;S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end';
+    open.href = 'intent://invite/' + code + rq + '#Intent;scheme=onetraxx;package=com.onetraxx.app;S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end';
   } else if (isIOS) {
     // Safari: try the app; if nothing took the page away in 2 s, go to the App Store.
     open.href = scheme;
