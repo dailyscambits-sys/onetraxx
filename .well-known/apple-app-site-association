@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["3SVSCBPC29.com.onetraxx.app"],
+        "components": [
+          { "/": "/i/*", "comment": "Invite links open in the app (R-411)" },
+          { "/": "/i", "comment": "Invite link without a trailing path" }
+        ]
+      }
+    ]
+  }
+}

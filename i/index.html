@@ -66,6 +66,9 @@
   var isAndroid = /Android/i.test(ua);
   var isIOS = /iPhone|iPad|iPod/i.test(ua);
   var PLAY = 'https://play.google.com/store/apps/details?id=com.onetraxx.app';
+  // R-411: the Play install referrer carries the invite (and room) through the
+  // install, so the first launch knows the inviter exactly (no IP matching).
+  if (code) PLAY += '&referrer=' + encodeURIComponent('u=' + code + (room ? '&r=' + room : ''));
   var APPSTORE = 'https://apps.apple.com/app/id6793381763';
   var open = document.getElementById('open');
 
@@ -82,6 +85,7 @@
     document.getElementById('bad').style.display = 'block';
   }
   // Only the other platform's store button is noise on a phone.
+  document.getElementById('play').href = PLAY;
   if (isAndroid) document.getElementById('appstore').classList.add('hidden');
   if (isIOS) document.getElementById('play').classList.add('hidden');
 

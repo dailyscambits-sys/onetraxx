@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.onetraxx.app",
+      "sha256_cert_fingerprints": [
+        "0C:7E:FE:1F:B6:F6:DE:B0:E4:51:E9:41:AB:11:22:A5:11:B3:7A:34:45:27:B5:B3:71:BC:CC:B6:DE:94:57:75"
+      ]
+    }
+  }
+]
