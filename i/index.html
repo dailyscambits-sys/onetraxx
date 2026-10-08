@@ -112,7 +112,17 @@
   var scheme = 'onetraxx://invite/' + code + rq;
   if (isAndroid) {
     // Chrome: opens the app when installed, otherwise goes to Play.
-    open.href = 'intent://invite/' + code + rq + '#Intent;scheme=onetraxx;package=com.onetraxx.app;S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end';
+    var intent = 'intent://invite/' + code + rq + '#Intent;scheme=onetraxx;package=com.onetraxx.app;S.browser_fallback_url=' + encodeURIComponent(PLAY) + ';end';
+    open.href = intent;
+    // Auto-forward: phones with App Links (vc55+) never reach this page, so a
+    // visit means no app or an old build. Try the app, then Play.
+    if (code) {
+      var ta = Date.now();
+      setTimeout(function () { location.href = intent; }, 150);
+      setTimeout(function () {
+        if (!document.hidden && Date.now() - ta < 2600) location.href = PLAY;
+      }, 1800);
+    }
   } else if (isIOS) {
     // Safari: try the app; if nothing took the page away in 2 s, go to the App Store.
     open.href = scheme;
@@ -124,6 +134,12 @@
         if (!document.hidden && Date.now() - t0 < 2600) location.href = APPSTORE;
       }, 2000);
     });
+    // Auto-forward: iPhones with Universal Links (1.4.17+) open the app before
+    // this page loads, so a visit means no app or an older build. Safari cannot
+    // probe the app without a tap, so go to the App Store.
+    if (code) {
+      setTimeout(function () { if (!document.hidden) location.href = APPSTORE; }, 1500);
+    }
   } else {
     // Desktop: the link only makes sense on a phone.
     open.href = scheme;
