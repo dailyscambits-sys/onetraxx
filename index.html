@@ -1204,6 +1204,16 @@
     .screen-cap { margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--txt); }
     .screen-sub { font-size: 12px; color: var(--txt3); margin-top: 4px; line-height: 1.5; }
 
+    .fit-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .fit-soon { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+      color: #FCD34D; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.45); border-radius: 999px; padding: 7px 14px; margin-bottom: 18px; }
+    .fit-soon::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #F59E0B; box-shadow: 0 0 10px #F59E0B; }
+    .fit-row .screen-frame video { width: 100%; height: auto; display: block; border-radius: 26px; aspect-ratio: 1206 / 2480; object-fit: cover; }
+    .fit-tag { display: inline-block; margin-left: 6px; font-size: 9px; font-weight: 800; letter-spacing: 1px; color: #FCD34D; border: 1px solid rgba(245,158,11,0.5);
+      border-radius: 999px; padding: 2px 6px; vertical-align: 2px; }
+    .fit-cta { display: inline-block; margin-top: 10px; padding: 14px 26px; border-radius: 14px; background: var(--p); color: #fff; font-weight: 800; text-decoration: none; }
+    .fit-cta:hover { background: var(--p2); }
+
     .stats-strip { row-gap: 18px; }
     .stats-note {
       flex-basis: 100%; text-align: center; font-size: 13px; color: var(--txt3);
@@ -1650,7 +1660,7 @@
       <a href="#support">Support</a>
       <a href="#privacy">Privacy</a>
       <a href="#terms">Terms</a>
-      <a href="/fit/">OneTraxxFit</a>
+      <a href="#fit">OneTraxxFit<span class="fit-tag">SOON</span></a>
       <a href="#download" class="nav-cta">Download App</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -2507,6 +2517,39 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ── OneTraxxFit (coming soon) ─────────────────────────────────────────── -->
+  <section id="fit">
+    <div class="fit-inner">
+      <div class="fit-soon reveal">Coming soon</div>
+      <div class="section-label reveal">New from OneTraxx</div>
+      <h2 class="section-title reveal">OneTraxxFit: every rep grows your dragon</h2>
+      <p class="section-sub reveal" style="margin:0 auto">A live exercise battle. Hold your phone, copy your trainer, and every rep grows your dragon. In the break the dragons fight. Five rounds, one winner. In closed testing now, on Android and iPhone soon.</p>
+      <div class="screens-row fit-row">
+        <div class="screen-card reveal">
+          <div class="screen-frame"><video src="img/fit/dragon-loop.mp4" poster="img/fit/dragon-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="OneTraxxFit dragon animation"></video></div>
+          <div class="screen-cap">Grow your dragon</div>
+          <div class="screen-sub">One rep, one section.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/fit/match-workout.jpg" width="480" height="987" alt="OneTraxxFit workout round with the trainer in the arena" loading="lazy"/></div>
+          <div class="screen-cap">Copy your trainer</div>
+          <div class="screen-sub">Six exercises, counted by motion.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/fit/match-fight.jpg" width="480" height="987" alt="OneTraxxFit dragons fighting in the arena" loading="lazy"/></div>
+          <div class="screen-cap">Then the dragons fight</div>
+          <div class="screen-sub">The longest wins the round.</div>
+        </div>
+        <div class="screen-card reveal">
+          <div class="screen-frame"><img src="img/fit/match-storm.jpg" width="480" height="987" alt="OneTraxxFit final round in a thunderstorm" loading="lazy"/></div>
+          <div class="screen-cap">Storm for the finale</div>
+          <div class="screen-sub">Five rounds, one winner.</div>
+        </div>
+      </div>
+      <a class="fit-cta reveal" href="/fit/">See OneTraxxFit ›</a>
     </div>
   </section>
 

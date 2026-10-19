@@ -10,8 +10,8 @@
   <meta property="og:site_name" content="OneTraxx"/>
   <meta property="og:url" content="https://onetraxx.com/fit/"/>
   <meta property="og:title" content="OneTraxxFit — Exercise Battle"/>
-  <meta property="og:description" content="Every rep grows your dragon. Five rounds, one winner. Privacy, terms and support for OneTraxxFit."/>
-  <meta property="og:image" content="https://onetraxx.com/img/fit-icon.png"/>
+  <meta property="og:description" content="Coming soon: every rep grows your dragon. Five rounds, one winner. Privacy, terms and support for OneTraxxFit."/>
+  <meta property="og:image" content="https://onetraxx.com/img/fit/match-fight.jpg"/>
   <meta name="theme-color" content="#07020f"/>
   <link rel="icon" type="image/png" href="../img/fit-icon.png"/>
   <link rel="apple-touch-icon" href="../img/fit-icon.png"/>
@@ -98,6 +98,21 @@
     .footer-links a { font-size: 13px; color: var(--txt3); text-decoration: none; font-weight: 600; }
     .footer-links a:hover { color: var(--txt2); }
     .footer-copy { font-size: 12px; color: var(--txt3); line-height: 1.6; }
+    .soon { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+      color: #FCD34D; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.45); border-radius: 999px; padding: 7px 14px; margin-bottom: 18px; }
+    .soon::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #F59E0B; box-shadow: 0 0 10px #F59E0B; }
+    .hero.split { max-width: 1060px; display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: center; }
+    .phone { border-radius: 34px; padding: 9px; background: linear-gradient(160deg, #1b1332, #0d0919); border: 1.5px solid rgba(124,58,237,0.35);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 60px rgba(124,58,237,0.25); }
+    .phone video, .phone img { width: 100%; height: auto; display: block; border-radius: 26px; aspect-ratio: 9 / 16; object-fit: cover; }
+    .shots-inner { max-width: 1100px; margin: 0 auto; }
+    .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .shot .phone img { aspect-ratio: 1206 / 2480; }
+    .shot-cap { margin-top: 14px; font-size: 14.5px; font-weight: 800; color: var(--txt); }
+    .shot-sub { font-size: 12.5px; color: var(--txt3); margin-top: 4px; line-height: 1.5; }
+    .ex img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 9px; margin-bottom: 10px; background: #000; }
+    @media (max-width: 900px) { .hero.split { grid-template-columns: 1fr; gap: 32px; } .hero.split .phone { max-width: 260px; margin: 0 auto; }
+      .shots { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 640px) { .nav-links { gap: 14px; } .nav-links a { font-size: 13px; } .block { padding: 22px 18px; } .hero { padding-top: 60px; } }
   </style>
 </head>
@@ -108,6 +123,7 @@
       <span><span class="nav-logo-text">OneTraxxFit</span><span class="nav-logo-sub">BY ONETRAXX</span></span>
     </a>
     <div class="nav-links">
+      <a href="#screens">Screens</a>
       <a href="#features">Features</a>
       <a href="#howitworks">How It Works</a>
       <a href="#exercises">Exercises</a>
@@ -119,7 +135,9 @@
     </div>
   </nav>
 
-  <div class="hero">
+  <div class="hero split">
+   <div>
+    <div class="soon">Coming soon</div>
     <div class="section-label">Exercise Battle</div>
     <h1 class="section-title">Every rep grows your dragon.</h1>
     <p class="section-sub">OneTraxxFit turns a workout into a live battle. Hold your phone, copy your trainer on screen, and every rep you do grows your dragon by one section. In the break the dragons fight. Five rounds, one winner. Play solo against up to five others, 3 v 3 with friends, or beat your own past self.</p>
@@ -127,10 +145,32 @@
       <a class="pill" href="#privacy">Privacy policy</a>
       <a class="pill" href="#terms">Terms of use</a>
       <a class="pill" href="#support">Support</a>
-      <a class="pill" href="https://play.google.com/store/apps/details?id=com.onetraxx.fit">Android · Google Play</a>
+      <span class="pill">Android · coming soon</span>
       <span class="pill">iPhone · coming soon</span>
     </div>
+    <p class="meta" style="margin-top:16px">OneTraxxFit is in closed testing now. Launch on Google Play and the App Store is coming soon. Want early access? Write to <a href="mailto:info@onetraxx.com">info@onetraxx.com</a>.</p>
+   </div>
+    <div class="phone"><video src="../img/fit/dragon-loop.mp4" poster="../img/fit/dragon-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="OneTraxxFit dragon background animation"></video></div>
   </div>
+
+  <!-- Screens -->
+  <section id="screens">
+    <div class="shots-inner">
+      <div class="section-label">See it in action</div>
+      <h2 class="section-title">Real screens from a real match.</h2>
+      <p class="section-sub">Six nests, six dragons, five rounds. Captured on an iPhone during testing.</p>
+      <div class="shots">
+        <div class="shot"><div class="phone"><img src="../img/fit/match-workout.jpg" width="480" height="987" loading="lazy" alt="Workout round: the trainer figure doing an overhead knee chop in the middle of the arena, six nests around it"/></div>
+          <div class="shot-cap">Copy your trainer</div><div class="shot-sub">30 seconds, one exercise. Every rep grows your dragon.</div></div>
+        <div class="shot"><div class="phone"><img src="../img/fit/match-fight.jpg" width="480" height="987" loading="lazy" alt="Rest break: dragons leave their nests and fight in the centre of the arena"/></div>
+          <div class="shot-cap">Then the dragons fight</div><div class="shot-sub">In the break the dragons leave their nests. The longest wins the round.</div></div>
+        <div class="shot"><div class="phone"><img src="../img/fit/match-storm.jpg" width="480" height="987" loading="lazy" alt="Final round in a thunderstorm with lightning over the arena"/></div>
+          <div class="shot-cap">The storm rolls in</div><div class="shot-sub">Calm, then wind, then thunder for the last fight.</div></div>
+        <div class="shot"><div class="phone"><img src="../img/fit/match-result.jpg" width="480" height="987" loading="lazy" alt="Match result screen with sections eaten, reps, calories and the standings"/></div>
+          <div class="shot-cap">One winner</div><div class="shot-sub">Reps, sections, calories and the standings, round by round.</div></div>
+      </div>
+    </div>
+  </section>
 
   <!-- Features -->
   <section id="features">
@@ -174,12 +214,12 @@
       <h2 class="section-title">Exercises in the draw.</h2>
       <p class="section-sub">Five of the six are drawn for every match, one per round. All are done standing, phone in hand, in a space the size of a yoga mat.</p>
       <div class="ex">
-        <div><strong>Squat to press</strong>Squat down, stand and press the phone overhead.</div>
-        <div><strong>Overhead knee chop</strong>Phone high, chop down to a raised knee.</div>
-        <div><strong>Squat jump</strong>Drop, explode up, land soft.</div>
-        <div><strong>Jumping jack</strong>Arms and legs out and in, the classic.</div>
-        <div><strong>Skipping</strong>Hop on the spot like a rope is turning.</div>
-        <div><strong>Skater jump</strong>Side to side hops, landing on one foot.</div>
+        <div><img src="../img/fit/ex-squat-press.jpg" width="400" height="400" loading="lazy" alt="Squat to press"/><strong>Squat to press</strong>Squat down, stand and press the phone overhead.</div>
+        <div><img src="../img/fit/ex-knee-chop.jpg" width="400" height="400" loading="lazy" alt="Overhead knee chop"/><strong>Overhead knee chop</strong>Phone high, chop down to a raised knee.</div>
+        <div><img src="../img/fit/ex-squat-jump.jpg" width="400" height="400" loading="lazy" alt="Squat jump"/><strong>Squat jump</strong>Drop, explode up, land soft.</div>
+        <div><img src="../img/fit/ex-jumping-jack.jpg" width="400" height="400" loading="lazy" alt="Jumping jack"/><strong>Jumping jack</strong>Arms and legs out and in, the classic.</div>
+        <div><img src="../img/fit/ex-skipping.jpg" width="400" height="400" loading="lazy" alt="Skipping"/><strong>Skipping</strong>Hop on the spot like a rope is turning.</div>
+        <div><img src="../img/fit/ex-skater.jpg" width="400" height="400" loading="lazy" alt="Skater jump"/><strong>Skater jump</strong>Side to side hops, landing on one foot.</div>
       </div>
     </div>
   </section>
