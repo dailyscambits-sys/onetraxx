@@ -67,6 +67,31 @@
     .biz-label { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--txt3); margin-bottom: 6px; }
     .biz-value { font-size: 14px; color: var(--txt2); line-height: 1.6; }
     .danger .icon { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.35); color: var(--red); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .card { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px 20px; }
+    .card-num { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--p2); margin-bottom: 8px; }
+    .card h3 { font-size: 15.5px; font-weight: 800; color: var(--txt); margin-bottom: 6px; }
+    .card p { font-size: 13.5px; color: var(--txt2); line-height: 1.6; }
+    .steps { display: flex; flex-direction: column; gap: 12px; }
+    .step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px 18px; }
+    .step-n { font-family: 'Bebas Neue', sans-serif; font-size: 30px; line-height: 1; color: var(--p2); }
+    .step h3 { font-size: 15.5px; font-weight: 800; margin-bottom: 4px; }
+    .step p { font-size: 13.5px; color: var(--txt2); line-height: 1.6; }
+    .ex { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .ex div { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px; font-size: 13.5px; color: var(--txt2); }
+    .ex strong { display: block; color: var(--txt); margin-bottom: 3px; }
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+    .plan { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 18px; padding: 24px; }
+    .plan.pro { border-color: rgba(245,158,11,0.55); box-shadow: 0 0 0 1px rgba(245,158,11,0.15) inset; }
+    .plan-name { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--p2); }
+    .plan.pro .plan-name { color: #F59E0B; }
+    .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 1px; line-height: 1; margin: 10px 0 2px; }
+    .plan-per { font-size: 13px; color: var(--txt3); margin-bottom: 14px; }
+    .plan ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .plan li { font-size: 13.5px; color: var(--txt2); padding-left: 18px; position: relative; }
+    .plan li::before { content: '\2713'; position: absolute; left: 0; color: var(--p2); font-weight: 800; }
+    .plan.pro li::before { color: #F59E0B; }
+    .fine { font-size: 12.5px; color: var(--txt3); margin-top: 14px; line-height: 1.6; }
     footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 36px 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px;
       background: rgba(14,10,20,0.4); }
     .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -83,10 +108,13 @@
       <span><span class="nav-logo-text">OneTraxxFit</span><span class="nav-logo-sub">BY ONETRAXX</span></span>
     </a>
     <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#howitworks">How It Works</a>
+      <a href="#exercises">Exercises</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#support">Support</a>
       <a href="#privacy">Privacy</a>
       <a href="#terms">Terms</a>
-      <a href="#support">Support</a>
-      <a href="#delete-account">Delete account</a>
       <a href="/">OneTraxx ›</a>
     </div>
   </nav>
@@ -103,6 +131,91 @@
       <span class="pill">iPhone · coming soon</span>
     </div>
   </div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="inner">
+      <div class="section-label">Features</div>
+      <h2 class="section-title">A workout that fights back.</h2>
+      <p class="section-sub">No wearable, no camera. Your phone in your hand is the controller.</p>
+      <div class="grid">
+        <div class="card"><div class="card-num">01</div><h3>Reps counted by motion</h3><p>The phone's accelerometer and gyroscope count every full rep. Half moves and shakes do not count, and the coach tells you why.</p></div>
+        <div class="card"><div class="card-num">02</div><h3>One rep, one section</h3><p>Every rep grows your dragon by one section. Six players, six nests, six dragons growing at once.</p></div>
+        <div class="card"><div class="card-num">03</div><h3>Fights after every round</h3><p>In the break the dragons leave their nests. The longest wins the round and keeps its margin; the rest burn down and start again.</p></div>
+        <div class="card"><div class="card-num">04</div><h3>Weather that turns</h3><p>Calm nests, then wind, then a thunderstorm for the last fight. The arena escalates with the match.</p></div>
+        <div class="card"><div class="card-num">05</div><h3>Solo, team or friends</h3><p>Quick solo arena for up to six, team 3 v 3, or a private arena by code. Dragons fill empty nests so you never wait.</p></div>
+        <div class="card"><div class="card-num">06</div><h3>Beat Yourself</h3><p>Race your own past match and set a new personal best when nobody else is around.</p></div>
+        <div class="card"><div class="card-num">07</div><h3>Bella, your coach</h3><p>A voice coach counts you in, names the next exercise and calls out a move that was too small to count.</p></div>
+        <div class="card"><div class="card-num">08</div><h3>Stats that stick</h3><p>Reps, sections eaten and calories per match, daily totals, personal bests, history and a profile card with your dragon.</p></div>
+        <div class="card"><div class="card-num">09</div><h3>Win and play free</h3><p>Every match costs one credit. The winner gets it back, and three wins in a row earn a bonus match that never expires.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="howitworks">
+    <div class="inner">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">From nest to winner in five rounds.</h2>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h3>Pick an arena</h3><p>Solo, Team, Play with friends or Beat Yourself. Guests get five free matches before an account is needed.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h3>Hold the phone, copy the trainer</h3><p>A 30-second round, one exercise drawn from six. Your trainer loops on screen; match the movement and the reps count.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h3>Watch the fight</h3><p>In the break the dragons fight tail for tail. The longest wins the round and carries its margin into the next.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h3>Five rounds, most points wins</h3><p>Round wins, kills and work at the cap all score. The storm rolls in for the fifth fight and the match goes to the highest total.</p></div></div>
+        <div class="step"><div class="step-n">5</div><div><h3>Collect and go again</h3><p>The winner's credit comes back, streaks earn bonus matches, and your stats and history update on the spot.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exercises -->
+  <section id="exercises">
+    <div class="inner">
+      <div class="section-label">The six</div>
+      <h2 class="section-title">Exercises in the draw.</h2>
+      <p class="section-sub">Five of the six are drawn for every match, one per round. All are done standing, phone in hand, in a space the size of a yoga mat.</p>
+      <div class="ex">
+        <div><strong>Squat to press</strong>Squat down, stand and press the phone overhead.</div>
+        <div><strong>Overhead knee chop</strong>Phone high, chop down to a raised knee.</div>
+        <div><strong>Squat jump</strong>Drop, explode up, land soft.</div>
+        <div><strong>Jumping jack</strong>Arms and legs out and in, the classic.</div>
+        <div><strong>Skipping</strong>Hop on the spot like a rope is turning.</div>
+        <div><strong>Skater jump</strong>Side to side hops, landing on one foot.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="inner">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-title">Free to fight. Pro to fight every day.</h2>
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">₹0</div>
+          <div class="plan-per">forever</div>
+          <ul>
+            <li>Daily free matches, plus five as a guest</li>
+            <li>Winner keeps the credit, 3-win streak earns a bonus</li>
+            <li>Solo, team, friends and Beat Yourself</li>
+            <li>Stats, history and personal bests</li>
+          </ul>
+        </div>
+        <div class="plan pro">
+          <div class="plan-name">OneTraxxFit Pro</div>
+          <div class="plan-price">₹99</div>
+          <div class="plan-per">per month · or ₹599 per year</div>
+          <ul>
+            <li>Unlimited matches, no daily cap</li>
+            <li>No rewarded ads, ever</li>
+            <li>Custom dragon colour</li>
+            <li>Everything in Free</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fine">Pro is billed through Google Play or the App Store, renews automatically and can be cancelled any time in your store account. Pro needs a full account, not a guest profile. Store prices may vary by country. See the <a href="/#refund">Refund &amp; Cancellation Policy</a>.</p>
+    </div>
+  </section>
 
   <!-- ── Privacy ─────────────────────────────────────────────────────────── -->
   <section id="privacy">
@@ -317,9 +430,12 @@
   <footer>
     <a href="/" class="nav-logo"><img src="../img/fit-icon.png" alt="OneTraxxFit"/><span class="nav-logo-text">OneTraxxFit</span></a>
     <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#howitworks">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#support">Support</a>
       <a href="#privacy">Privacy Policy</a>
       <a href="#terms">Terms of Use</a>
-      <a href="#support">Support</a>
       <a href="#delete-account">Delete account</a>
       <a href="/#refund">Refunds</a>
       <a href="/">OneTraxx</a>
